@@ -162,17 +162,12 @@
     </div>
 	 <div class="container-fluid">
 		<div class="row-fluid">   	
-			<div class="span3" style="padding: 5px">
-			  <ul class="pager" >
-   				 <li class="previous">
-    			   <a href="#">&larr; </a>
-    			 </li>
-    			 <li style="text-align:center; position: relative; top:5px; font-size:24pt; margin: 10px 0; font-weight: bold; line-height: 20px">Hole 1</li>  
-             <li class="next">
-               <a href="#"> &rarr;</a>
-             </li>
-           </ul>
-           <hr>
+			<div class="span3" style="padding:10px">
+			  <label for="courseSelect">Course:
+			  	<select name="courseSelect" id="courseSelect">
+			  		<option>Brampton</option>
+			  	</select>
+			  </label>
        <!--    <ul class="thumbnails" style="">
            	<li class="span3" style="min-height:auto; margin-left:20px">
 				 <button id="teeblocks" class="btn"></button>         	
@@ -200,29 +195,44 @@
            	</li>
            </ul> -->
            
-           <button class="btn btn-large" id="polygonBtn">Add Polygon Feature</button>
-           <button class="btn btn-large" id="pointBtn">Add Point Feature</button>
-           	<hr>
+           <button class="btn" id="polygonBtn">+ Polygon Feature</button>
+           <button class="btn" id="pointBtn">+ Point Feature</button>
+<!--           	<hr>
            	<input type="button" value="Print this page" onclick="printpage()">
+-->
            	<hr>
-           	<table class="table table-hover">
+           	<label for="CourseHoleNum">Hole:
+				<select name="CourseHoleNum" id="CourseHoleNum">
+					<option value="1">1</option>
+					<option value="2">2</option>
+					<option value="3">3</option>
+					<option value="4">4</option>
+					<option value="5">5</option>
+					<option value="6">6</option>
+					<option value="7">7</option>
+					<option value="8">8</option>
+					<option value="9">9</option>
+					<option value="10">10</option>
+					<option value="11">11</option>
+					<option value="12">12</option>
+					<option value="13">13</option>
+					<option value="14">14</option>
+					<option value="15">15</option>
+					<option value="16">16</option>
+					<option value="17">17</option>
+					<option value="18">18</option>
+				</select>
+			</label>
+           	<table class="table table-hover table-bordered">
 				 <thead>
 				  <tr>
-				   <th>Hole Features</th>
+				   <th style="background-color:#0066ff; color:#ffffff">Attributes</th>
 				  </tr>
 				 </thead>
-				 <tbody>
-				  <tr><td>Tee Box - Blue</td></tr>
-				  <tr><td>Tee Box - Red</td></tr>
-				  <tr><td>Fairway</td></tr>
-				  <tr><td>Sand Trap - 1</td></tr>
-				  <tr><td>Sand Trap - 2</td></tr>
-				  <tr><td>Green</td></tr>
+				 <tbody id="holeAttributes">
+
 				 </tbody>
-           	</table>
-           	<div style="text-align:center">
-           	<button class="btn btn-success" type="button" style="float:">Save</button>
-           	</div>      	
+           	</table>      	
 			</div>  		
     		<div class="span9" id="map_canvas">
     		</div>
@@ -236,11 +246,12 @@
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
     <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDMEWbu-DxkBYqkZa-gNuaLPPoAm0CEHCM&sensor=false&libraries=drawing"> </script>
-	 <script type="text/javascript" src="js/googlemaps.js"></script>	
 	 <script src="http://code.jquery.com/jquery-1.8.3.js"></script>
 	 <script src="http://code.jquery.com/ui/1.9.2/jquery-ui.js"></script>
 	 <script type="text/javascript" src="js/accordion.js"> </script>
 	 <script src="bootstrap/js/jquery.js"></script>
+	 <script type="text/javascript" src="js/googlemaps.js"></script>
+	 <script type="text/javascript" src="js/brdyMap.js"></script>	
 	 <script src="bootstrap/js/bootstrap-transition.js"></script>
 	 <script src="bootstrap/js/bootstrap-alert.js"></script>
 	 <script src="bootstrap/js/bootstrap-modal.js"></script>

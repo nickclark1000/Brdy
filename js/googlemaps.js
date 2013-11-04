@@ -11,7 +11,7 @@ function initialize() {
   var map = new google.maps.Map(document.getElementById("map_canvas"),mapOptions);
   
   var drawingManager = new google.maps.drawing.DrawingManager({
-		drawingControl: true,
+		drawingControl: false,
 		drawingControlOptions: {
 		   drawingModes: [google.maps.drawing.OverlayType.MARKER,
  							  google.maps.drawing.OverlayType.CIRCLE,
@@ -57,15 +57,14 @@ function initialize() {
 	
 	      			//put all form elements in a "data" object
 	      			var pointdata = {				
-					holeNum:	$("select[name=holeNum]", this).val(),				
-					pointType: $("select[name=pointType]", this).val(),
-					pointSubType: $("select[name=pointSubType]", this).val(),
-			  		pointLoc: wktelement
+						holeNum:	$("select[name=holeNum]", this).val(),				
+						pointType: $("select[name=pointType]", this).val(),
+						pointSubType: $("select[name=pointSubType]", this).val(),
+						pointLoc: wktelement
 					};
 				
 	   				//send the results to the PHP script that adds the point to the database
-					$.post("../newpointfeature.php", pointdata);
-	      			return false;	
+					$.post("../newpointfeature.php", pointdata);	
 	  		});	  
   	});
 
