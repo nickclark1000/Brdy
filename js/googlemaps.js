@@ -1,34 +1,60 @@
 // Enable the visual refresh
 google.maps.visualRefresh = true;
 
-
 function initialize() {
-  var mapOptions = {
-    center: new google.maps.LatLng(43.667872,-79.715853),
-    zoom: 16,
-    mapTypeId: google.maps.MapTypeId.SATELLITE
-  };
-  var map = new google.maps.Map(document.getElementById("map_canvas"),mapOptions);
+	var mapOptions = {
+		center: new google.maps.LatLng(43.667872,-79.715853),
+		zoom: 16,
+		mapTypeId: google.maps.MapTypeId.SATELLITE
+	};
+	var map = new google.maps.Map(document.getElementById("map_canvas"),mapOptions);
   
-  var drawingManager = new google.maps.drawing.DrawingManager({
+	var drawingManager = new google.maps.drawing.DrawingManager({
 		drawingControl: false,
 		drawingControlOptions: {
-		   drawingModes: [google.maps.drawing.OverlayType.MARKER,
- 							  google.maps.drawing.OverlayType.CIRCLE,
-						     google.maps.drawing.OverlayType.POLYGON,
- 							  google.maps.drawing.OverlayType.POLYLINE]
+			drawingModes: [
+				google.maps.drawing.OverlayType.MARKER,
+ 				google.maps.drawing.OverlayType.CIRCLE,
+				google.maps.drawing.OverlayType.POLYGON,
+ 				google.maps.drawing.OverlayType.POLYLINE
+ 			]
  		},
 		markerOptions: {
   			draggable: true,
   			icon: 'img/marker.png',
 		}
-  });
-  	   
+	});
+  
+	//adding wicket geometry
+//	document.getElementById("wicketbtn").addEventListener("click",function() {
+		polywkt = new Wkt.Wkt();
+		val = 'POINT(-79.72 43.667)';
+		polyval = 'POLYGON((-79.72079826149638 43.667455438390576,-79.72084922346767 43.667430215768924,-79.72087604555782 43.66740111273077,-79.72087738666232 43.66736133855585,-79.72086665782626 43.66733320558693,-79.72082374248203 43.667300222089324,-79.72076741609271 43.66727111898814,-79.72072718295749 43.667252687016784,-79.72066549215015 43.667249776704985,-79.72059977802928 43.667272089091746,-79.72055552158054 43.667321564354545,-79.72053942832645 43.6673603684537,-79.72055552158054 43.667392381816605,-79.72058636698421 43.66741857455537,-79.72060648355182 43.66743215597097,-79.72065878662761 43.66744573738349,-79.72070304307636 43.667454468289925,-79.72075802836116 43.667457378591806,-79.72079826149638 43.667455438390576))';
+		output = polywkt.read( polyval );
+		polyobj = polywkt.toObject();
+//		polyobj.setMap(map);
+		pointwkt = new Wkt.Wkt();
+		val = 'POINT(-79.72 43.667)';
+		ptoutput = pointwkt.read(val);
+		pointobj = pointwkt.toObject();
+		pointobj.setMap(map);
+		
+//	});
+	
+	google.maps.event.addListener(map, 'click', function(e) {
+    var result;
+    if (google.maps.geometry.poly.containsLocation(e.latLng, polyobj)) {
+      alert("green in regulation");
+		} else { alert("missed green");}
+		});
+			
+			
+	
   drawingManager.setMap(map);
 
 	//Set the drawing mode using custom button
    document.getElementById("polygonBtn").onclick= function(){drawingManager.setDrawingMode(google.maps.drawing.OverlayType.POLYGON);};
-   document.getElementById("pointBtn").onclick= function(){drawingManager.setDrawingMode(google.maps.drawing.OverlayType.MARKER);};    	  		
+	document.getElementById("pointBtn").onclick= function(){drawingManager.setDrawingMode(google.maps.drawing.OverlayType.MARKER);};    	  		
   
 	google.maps.event.addListener(drawingManager,'markercomplete',function(marker) {
   			//adding a point feature 
