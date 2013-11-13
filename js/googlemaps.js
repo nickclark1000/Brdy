@@ -42,27 +42,27 @@ function initialize() {
 //	});
 	
 	google.maps.event.addListener(map, 'click', function(e) {
-    var result;
-    if (google.maps.geometry.poly.containsLocation(e.latLng, polyobj)) {
-      alert("green in regulation");
-		} else { alert("missed green");}
-		});
-			
-			
-	
-  drawingManager.setMap(map);
+		var result;
+		if (google.maps.geometry.poly.containsLocation(e.latLng, polyobj)) {
+			alert("green in regulation");
+		} else { 
+			alert("missed green");
+		}
+	});
+
+	drawingManager.setMap(map);
 
 	//Set the drawing mode using custom button
-   document.getElementById("polygonBtn").onclick= function(){drawingManager.setDrawingMode(google.maps.drawing.OverlayType.POLYGON);};
-	document.getElementById("pointBtn").onclick= function(){drawingManager.setDrawingMode(google.maps.drawing.OverlayType.MARKER);};    	  		
-  
+    document.getElementById("polygonBtn").onclick= function(){drawingManager.setDrawingMode(google.maps.drawing.OverlayType.POLYGON);};
+	document.getElementById("pointBtn").onclick= function(){drawingManager.setDrawingMode(google.maps.drawing.OverlayType.MARKER);};    	  			  		
+
 	google.maps.event.addListener(drawingManager,'markercomplete',function(marker) {
   			//adding a point feature 
 	  		var form = $(".pointform").clone().show();
 	  		var infowindowcontent = form[0];
 	  		var infowindow = new google.maps.InfoWindow({
-					content: infowindowcontent
-	  				}); 
+				content: infowindowcontent
+	  		}); 
 	  
 	  		google.maps.event.addListener(marker,'click',function() {
 					infowindow.open(map,marker);   
@@ -129,8 +129,7 @@ function initialize() {
 
  	
  	//adding course features via polygoncomplete
-   google.maps.event.addListener(drawingManager,'polygoncomplete',function(polygon) {
-  	
+	google.maps.event.addListener(drawingManager,'polygoncomplete',function(polygon) {
 	  	var featureform = $(".polygonform").clone().show();
 	  	var infowindowfeaturecontent = featureform[0];
 	  	var infofeaturewindow = new google.maps.InfoWindow({
@@ -148,7 +147,7 @@ function initialize() {
 	  	featureform.submit({name: "polygon"}, function (event) {
 	
 			//prevent the default form behavior (which would refresh the page)
-				event.preventDefault();
+			event.preventDefault();
 			
 			//  	var coordinates = (polygon.getPath().getArray());
 		  	var numpoints = polygon.getPath();
