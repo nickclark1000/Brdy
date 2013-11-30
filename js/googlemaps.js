@@ -5,6 +5,7 @@ function initialize() {
 	var mapOptions = {
 		center: new google.maps.LatLng(43.667872,-79.715853),
 		zoom: 16,
+		mapTypeControl: false,
 		mapTypeId: google.maps.MapTypeId.SATELLITE
 	};
 	var map = new google.maps.Map(document.getElementById("map_canvas"),mapOptions);
@@ -54,7 +55,8 @@ function initialize() {
 
 	//Set the drawing mode using custom button
     document.getElementById("polygonBtn").onclick= function(){drawingManager.setDrawingMode(google.maps.drawing.OverlayType.POLYGON);};
-	document.getElementById("pointBtn").onclick= function(){drawingManager.setDrawingMode(google.maps.drawing.OverlayType.MARKER);};    	  			  		
+	document.getElementById("pointBtn").onclick= function(){drawingManager.setDrawingMode(google.maps.drawing.OverlayType.MARKER);};
+	document.getElementById("polylineBtn").onclick= function(){drawingManager.setDrawingMode(google.maps.drawing.OverlayType.POLYLINE);};    	  			  		
 
 	google.maps.event.addListener(drawingManager,'markercomplete',function(marker) {
   			//adding a point feature 
@@ -127,7 +129,19 @@ function initialize() {
 		  		});
 	*/
 
- 	
+ 	//adding course features via polylinecomplete
+ 	google.maps.event.addListener(drawingManager,'polylinecomplete',function(polyline) {
+		var path = polyline.getPath();
+		var wktelement = "'LINESTRING(";
+		for (var i =0; i < path.length; i++) {
+		        var lat_i = path.getAt(i).lat();
+		        var lng_i = path.getAt(i).lng();
+		        wktelement += lng_i + " "+ lat_i + ",";
+		}
+		wktelement = wktelement.slice(0, -1);
+		wktelement += ")'";
+ 		$.post("../newpolylinefeature.php",{wktelement: wktelement});
+ 	});
  	//adding course features via polygoncomplete
 	google.maps.event.addListener(drawingManager,'polygoncomplete',function(polygon) {
 	  	var featureform = $(".polygonform").clone().show();
@@ -138,7 +152,7 @@ function initialize() {
 	  	
 	  	//need to get a lat/lon pair to set where to display the info window
 	  	var polylength=polygon.getPath().getArray().length;
-	   var lastarray=polygon.getPath().getAt(polylength-1);	
+	    var lastarray=polygon.getPath().getAt(polylength-1);	
 	  	infofeaturewindow.setPosition(lastarray);
 	  		
 	  	infofeaturewindow.open(map);

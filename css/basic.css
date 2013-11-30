@@ -5,10 +5,10 @@
 	background: #0066FF;
 	}
 	
-/* #map_canvas { 
+ #map_canvas { 
 	height: 100%;
-	float: right;
-	} */
+	position: relative;
+	} 
 	
 #leftSideMenu {
 	float:left;

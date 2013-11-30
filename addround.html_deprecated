@@ -68,13 +68,14 @@
 			</div>
 		</div>
 		<div class="container-fluid">
-			<div class="row-fluid">   	
+			<div id="map_canvas"></div>
+		<!--	<div class="row-fluid">   	
 				<div class="span3" style="padding:10px">
-				<!--	<label for="courseSelect">Course:
+					<label for="courseSelect">Course:
 						<select name="courseSelect" id="courseSelect">
 							<option>Brampton</option>
 						</select>
-				  	</label> -->
+				  	</label> 
            			<label for="CourseHoleNum">Hole #:
 						<select name="CourseHoleNum" id="CourseHoleNum">
 							<option value="1">1</option>
@@ -134,11 +135,12 @@
            			<button class="btn" style="width:100%;">Save</button>    	
 				</div>  		
     			<div class="span9" id="map_canvas"></div>
-    		</div> 
+    			<div style="width:300px;height:60px;border:#999999 1px solid; background-color: #ffffff; position:absolute; top:50px; right:10px"><h3 style="padding-left:10px">Distance to pin: <span id="distanceToPin">--</span> <!--</h3></div>
+    		</div> -->
 	 	</div>
 
 		<!-- Javascript -->
-		<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDMEWbu-DxkBYqkZa-gNuaLPPoAm0CEHCM&sensor=false&libraries=drawing"> </script>
+		<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDMEWbu-DxkBYqkZa-gNuaLPPoAm0CEHCM&sensor=false&libraries=drawing,geometry"> </script>
 		<script src="http://code.jquery.com/jquery-1.8.3.js"></script>
 		<script src="http://code.jquery.com/ui/1.9.2/jquery-ui.js"></script>
 		<script type="text/javascript" src="js/wicket.src.js"> </script>
