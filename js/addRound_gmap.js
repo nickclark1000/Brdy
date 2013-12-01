@@ -43,7 +43,7 @@ holeTeeblock = teeblockWkt.toObject();
 
 targetWkt = new Wkt.Wkt();
 targetVal = 'LINESTRING(-79.71716210235172 43.66818203936356,-79.71865877498203 43.667774600648855,-79.71917375911289 43.6675844616355,-79.7201661764484 43.66742924566789,-79.72076699126774 43.667355517942674)';
-targetoutput = targetWkt.read(teeblockVal);
+targetoutput = targetWkt.read(targetVal);
 holeTarget = targetWkt.toObject();
 
 //Boolean to keep track of whether the hole is completed
@@ -77,7 +77,8 @@ function initialize() {
  	google.maps.event.addListener(map, 'click', addLatLng);
   	
 	holePin.setMap(map);
-//	holeTee.setMap(map);
+	holeTarget.setMap(map);
+	
 	pinLocation = holePin.getPosition();
 	teeLocation = holeTee.getPosition();
 	google.maps.event.addListener(map,'mousemove',function(event) {
@@ -105,6 +106,14 @@ function addLatLng(event) {
 	  // Because path is an MVCArray, we can simply append a new coordinate
 	  // and it will automatically appear.
 	  path.push(event.latLng);
+	  
+	  // Add a new marker at the new plotted point on the polyline.
+	  var marker = new google.maps.Marker({
+		position: event.latLng,
+		title: 'Shot ' + path.getLength(),
+		map: map
+	  });
+
 	  
 	  var numShots = path.getLength();
 	  
@@ -160,13 +169,7 @@ function addLatLng(event) {
   	  }
  */
   
-	  // Add a new marker at the new plotted point on the polyline.
-	  var marker = new google.maps.Marker({
-		position: event.latLng,
-		title: 'Shot ' + path.getLength(),
-		map: map
-	  });
-
+	  
 	  //Add marker to the array
 	  markers.push(marker);
 	  
@@ -201,7 +204,9 @@ function addLatLng(event) {
 		position: marker.position
 	});
 	infowindow.open(map,marker);
-
+	
+	
+	
 	//Show info window when you click on a marker
 	google.maps.event.addListener(marker, 'click', function() {
 		var infowindow = new google.maps.InfoWindow({
@@ -224,9 +229,138 @@ google.maps.event.addListener(holePin, 'click', function(){
 	z = google.maps.geometry.spherical.computeDistanceBetween(x.position,pinLocation);
 	shots[y].shotDist = z * 1.09361;
 	
+	//heading calculation
+	shotHeading = google.maps.geometry.spherical.computeHeading(markers[0].position,markers[1].position);
+	targetPts = holeTarget.getPath().getLength();
+	
+	//pick the second element on the target path by default and then loop through to find a better match
+	closestPt = 1;
+	closestDistance = 99999;
+	//start the loop at 1 since 0 element is on the tee block
+	for(i=1; i<targetPts; i++) {
+		distance = google.maps.geometry.spherical.computeDistanceBetween(markers[1].position, holeTarget.getPath().getAt(i));
+		if (distance < closestDistance) {
+			closestPt = i;
+			closestDistance = distance;
+		}
+	}
+	console.log(closestPt, closestDistance);
+	targetHeading = google.maps.geometry.spherical.computeHeading(markers[0].position,holeTarget.getPath().getAt(closestPt));
+	dirOffTarget = getDirOffTarget(shotHeading,targetHeading);
+	shots[0]["dirOffTarget"] = dirOffTarget;
+	console.log(dirOffTarget);
+	
+	//distance from fairway calculations
+	cosTheta = Math.abs(Math.cos(getRadians(shotHeading - targetHeading)));
+	//back to meters
+	a = shots[0].shotDist * cosTheta * 0.9144;
+//	console.log(shots[0].shotDist + '--' + a + '--' + cosTheta);
+	b = google.maps.geometry.spherical.computeOffset(markers[0].position, a, targetHeading);
+	
+	var c = new google.maps.Marker({
+		position: b,
+		title: 'c',
+		map: map
+	  });
+	  c.setMap(map);
+	  
+	  d = google.maps.geometry.spherical.computeDistanceBetween(b, markers[1].position) * 1.09361;
+	  for (i=1; i<1000; i++) {
+	  		e = google.maps.geometry.spherical.interpolate(c.position, markers[1].position, i/1000);
+	  		if (google.maps.geometry.poly.containsLocation(e, holeFairway)==false) {
+	  			break;
+	  		}
+	  }
+	  var f = new google.maps.Marker({
+		position: e,
+		title: 'f',
+		map: map
+	  });
+	  f.setMap(map);
+	  g = google.maps.geometry.spherical.computeDistanceBetween(e, markers[1].position) * 1.09361;
+//	console.log(shotHeading, targetHeading, shots[0].shotDist, a, cosTheta, b, d, e, g);
+//	console.log(google.maps.geometry.spherical.computeDistanceBetween(holeTarget.getPath().getAt(1),marker.position));
+	  
+	
 	//send the results to the PHP script that adds the point to the database
 	$.post("../addShots.php", {shots: shots}, function(data){alert('data loaded:' + data );});
 	
 });
+
+function getDirOffTarget(shotHeading, targetHeading) {
+	s = shotHeading;
+	t = targetHeading;
+	var sQuad;
+	var tQuad;
+	
+	// determine t quadrant
+	if (t >= 0 && t < 90) {
+		tQuad = 1;
+	} else if (t > 90 && t < 180) {
+		tQuad = 2;
+	} else if (t < -90 && t >= -180) {
+		tQuad = 3;
+	} else {
+		tQuad = 4;
+	}
+	
+	//determine s quadrant
+	if (s >= 0 && s < 90) {
+		sQuad = 1;
+	} else if (s > 90 && s < 180) {
+		sQuad = 2;
+	} else if (s < -90 && s >= -180) {
+		sQuad = 3;
+	} else {
+		sQuad = 4;
+	}
+	
+	// if tQuad is the same quadrant as sQuad
+	if (sQuad == tQuad) {
+		if (s > t) {
+			dirOffTarget = 'R';
+		} else {
+			dirOffTarget = 'L';
+		}
+	} else
+	
+	//if tQuad is 1
+	if (sQuad == 2 && tQuad == 1) {
+		dirOffTarget = 'R';
+	} else
+	if (sQuad == 4 && tQuad == 1) {
+		dirOffTarget = 'L';
+	} else
+	
+	//if tQuad is 2
+	if (sQuad == 1 && tQuad == 2) {
+		dirOffTarget = 'L';
+	} else
+	if (sQuad == 3 && tQuad == 2) {
+		dirOffTarget = 'R';
+	} else
+	
+	//if tQuad is 3
+	if (sQuad == 2 && tQuad == 3) {
+		dirOffTarget = 'L';
+	} else
+	if (sQuad == 4 && tQuad == 3) {
+		dirOffTarget = 'R';
+	} else
+	
+	//if tQuad is 4
+	if (sQuad == 3 && tQuad == 4) {
+		dirOffTarget = 'L';
+	} else
+	if (sQuad == 1 && tQuad == 4) {
+		dirOffTarget = 'R';
+	}
+	return dirOffTarget;
+}
+
+// Converts from degrees to radians.
+function getRadians(degrees) {
+  	return degrees * Math.PI / 180;
+}
 
 google.maps.event.addDomListener(window,'load',initialize);

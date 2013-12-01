@@ -109,7 +109,7 @@
 					</div>
 			</ul>
 		</div>
-		<div class="col-md-10" style="background-color:blue; height:100%">
+		<div class="col-md-10" style="height:100%">
 		wewerwer
 		</div>
 	 </div>
