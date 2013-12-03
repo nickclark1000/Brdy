@@ -219,21 +219,27 @@ function addLatLng(event) {
 
 //Add the final shot that goes into the hole
 google.maps.event.addListener(holePin, 'click', function(){
+	//calculate the shot distance for the last shot
 	var wkt = new Wkt.Wkt();
 	wkt.fromObject(holePin);
 	var pinLatLng = new google.maps.LatLng(wkt.components[0].y, wkt.components[0].x);
 	path.push(pinLatLng);
 	doneHole = true;
+	// subtract 2 from the length to accommodate the counting from 0 and identifying the last shot marker
 	y = path.getLength() - 2;
 	x = markers[y];
 	z = google.maps.geometry.spherical.computeDistanceBetween(x.position,pinLocation);
+	//convert to yards
 	shots[y].shotDist = z * 1.09361;
 	
-	//heading calculation
+	//heading calculation of tee shot
 	shotHeading = google.maps.geometry.spherical.computeHeading(markers[0].position,markers[1].position);
+	
+	//heading calculation of best target pt
+	//define the number of target pts on the hole (for when hole is a dog leg)
 	targetPts = holeTarget.getPath().getLength();
 	
-	//pick the second element on the target path by default and then loop through to find a better match
+	//pick the second element (1) on the target path by default and then loop through to find a better match
 	closestPt = 1;
 	closestDistance = 99999;
 	//start the loop at 1 since 0 element is on the tee block
@@ -244,43 +250,39 @@ google.maps.event.addListener(holePin, 'click', function(){
 			closestDistance = distance;
 		}
 	}
-	console.log(closestPt, closestDistance);
+
 	targetHeading = google.maps.geometry.spherical.computeHeading(markers[0].position,holeTarget.getPath().getAt(closestPt));
+	
+	//determine the direction off target (Left L or right R)
 	dirOffTarget = getDirOffTarget(shotHeading,targetHeading);
 	shots[0]["dirOffTarget"] = dirOffTarget;
-	console.log(dirOffTarget);
 	
 	//distance from fairway calculations
+	//use angle between shot and target headings to get cosine
 	cosTheta = Math.abs(Math.cos(getRadians(shotHeading - targetHeading)));
-	//back to meters
-	a = shots[0].shotDist * cosTheta * 0.9144;
-//	console.log(shots[0].shotDist + '--' + a + '--' + cosTheta);
-	b = google.maps.geometry.spherical.computeOffset(markers[0].position, a, targetHeading);
 	
-	var c = new google.maps.Marker({
-		position: b,
-		title: 'c',
-		map: map
-	  });
-	  c.setMap(map);
-	  
-	  d = google.maps.geometry.spherical.computeDistanceBetween(b, markers[1].position) * 1.09361;
-	  for (i=1; i<1000; i++) {
-	  		e = google.maps.geometry.spherical.interpolate(c.position, markers[1].position, i/1000);
-	  		if (google.maps.geometry.poly.containsLocation(e, holeFairway)==false) {
-	  			break;
-	  		}
-	  }
-	  var f = new google.maps.Marker({
-		position: e,
-		title: 'f',
-		map: map
-	  });
-	  f.setMap(map);
-	  g = google.maps.geometry.spherical.computeDistanceBetween(e, markers[1].position) * 1.09361;
-//	console.log(shotHeading, targetHeading, shots[0].shotDist, a, cosTheta, b, d, e, g);
-//	console.log(google.maps.geometry.spherical.computeDistanceBetween(holeTarget.getPath().getAt(1),marker.position));
-	  
+	//find the adjacent distance and make sure to convert to meters for Google calculations that follow
+	adjDistance = shots[0].shotDist * cosTheta * 0.9144;
+	
+	//find the location of the right-angle corner of the triangle
+	cornerPt = google.maps.geometry.spherical.computeOffset(markers[0].position, adjDistance, targetHeading);
+	
+	//find distance between cornerPt/middle of fairway and 2nd shot location. Make sure to convert to yards. Assign to first shot. 
+	ydsOffFairwayCenter = google.maps.geometry.spherical.computeDistanceBetween(cornerPt, markers[1].position) * 1.09361;
+	shots[0]["ydsOffFairwayCenter"] = ydsOffFairwayCenter;
+	
+	//if fairway was missed, use Google interpolate and containsLocation methods to find approximate location of the edge of fairway
+	if (shots[1]["shotFrom"] !== 'fairway') {
+		for (i=1; i<1000; i++) {
+			intersectPt = google.maps.geometry.spherical.interpolate(cornerPt, markers[1].position, i/1000);
+			if (google.maps.geometry.poly.containsLocation(intersectPt, holeFairway)==false) {
+				break;
+			}
+		}	
+		//calculate distance beween the edge of fairway and 2nd shot location. Make sure to convert to yards.
+		ydsOffFairway = google.maps.geometry.spherical.computeDistanceBetween(intersectPt, markers[1].position) * 1.09361;
+		shots[0]["ydsOffFairway"] = ydsOffFairway;
+	}
 	
 	//send the results to the PHP script that adds the point to the database
 	$.post("../addShots.php", {shots: shots}, function(data){alert('data loaded:' + data );});
