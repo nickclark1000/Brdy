@@ -54,7 +54,7 @@
 					<div class="collapse" id="offthetee">
 						<ul>
 							<li id="offTheTeeDistance"><a href="#">Distance</a></li>
-							<li><a href="#">Accuracy</a></li>
+							<li id="offTheTeeAccuracy"><a href="#">Accuracy</a></li>
 						</ul>
 					</div>
 				<li><a href="#" data-toggle="collapse" data-target="#approachthegreen">Approach the Green</a></li>
@@ -109,6 +109,7 @@
 		</div>
 		<div class="col-md-10" style="height:100%; border-left: 5px solid #e6e6e6">
 			<div id="reportBody"></div>
+			
 		</div>
 	 </div>
 
@@ -121,7 +122,8 @@
 		<script type="text/javascript" src="js/accordion.js"> </script>
 		<script type="text/javascript" src="bootstrap/js/bootstrap.min.js"></script>
 		<script type="text/javascript" src="js/typeahead.js"></script>
+		<script type="text/javascript" src="js/jquery.flot.js"></script>
+		<script type="text/javascript" src="js/jquery.flot.axislabels.js"></script>
 		<script type="text/javascript" src="js/shots.js"></script>
-
   </body>
 </html>

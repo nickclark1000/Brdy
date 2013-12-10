@@ -10,3 +10,16 @@ document.getElementById("offTheTeeDistance").onclick = function(){
 		}
 	});
 }
+document.getElementById("offTheTeeAccuracy").onclick = function(){
+	var string = '1';
+	$.ajax({
+		type: "GET",
+		url: "../getOffTheTeeAccuracy.php",
+		data: {'data': string},                         
+		success: function(string){                    
+			$("#reportBody").html(string);
+		}
+	});
+}
+
+

@@ -24,72 +24,63 @@
 	</head>
 	<body>
     	<!-- Fixed navbar -->
-    <div class="navbar navbar-default navbar-fixed-top" role="navigation">
-      <div class="container">
-        <div class="navbar-header">
-          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
-          <a class="navbar-brand" href="/landingpage.html">Brdy</a>
-        </div>
-        <div class="navbar-collapse collapse">
-          <ul class="nav navbar-nav">
-            <li ><a href="/addround.php">Play</a></li>
-          </ul>
-          <ul class="nav navbar-nav">
-            <li ><a href="/stats.php">Stats</a></li>
-          </ul>
-        </div><!--/.nav-collapse -->
-      </div>
-    </div>
+		<div class="navbar navbar-default navbar-fixed-top" role="navigation">
+		  <div class="container">
+			<div class="navbar-header">
+			  <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+				<span class="sr-only">Toggle navigation</span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+			  </button>
+			  <a class="navbar-brand" href="/landingpage.html">Brdy</a>
+			</div>
+			<div class="navbar-collapse collapse">
+			  <ul class="nav navbar-nav">
+				<li ><a href="/addround.php">Play</a></li>
+			  </ul>
+			  <ul class="nav navbar-nav">
+				<li ><a href="/stats.php">Stats</a></li>
+			  </ul>
+			</div><!--/.nav-collapse -->
+		  </div>
+		</div>
 		<div style="height:100%">
 			<div id="map_canvas"></div>
+			<!--
 			<div class="row" style="position: absolute; top:70px; left:40px; max-width:400px; width:90%; padding-right:10px;">
 				<div class="input-group">
 				  <input type="text" class="twitter-typeahead form-control" style="width:100%; box-shadow:0 2px 6px rgba(0,0,0,0.3),0 4px 15px -5px rgba(0,0,0,0.0);">
 				  <span class="input-group-btn" style="box-shadow:0 2px 6px rgba(0,0,0,0.3),0 4px 15px -5px rgba(0,0,0,0.0);">
 					<button class="btn btn-default" type="button" >Search</button>
 				  </span>
-				</div><!-- /input-group -->
-			</div><!-- /.row -->
-			<div class="panel" style="width:320px;height:90px;border:#999999 1px solid; background-color: #ffffff; position:absolute; top:120px; left:30px">
-			<div id="myCarousel" class="carousel slide" data-ride="carousel">
-
-      <div class="carousel-inner" style="text-align:center">
-		  <div class="active item" style="height:90px; text-align:center">
-			<h4 style="margin-bottom:0px">Hole 1</h4>
-			<table class="table-condensed" style="margin:auto">
+				</div>
+			</div>-->
+			
+			<div class="panel" style="width:320px;height:90px;border:#999999 1px solid; background-color: #ffffff; position:absolute; top:90px; left:30px">
+				<div id="myCarousel" class="carousel slide" data-ride="carousel">
+      				<div class="carousel-inner" style="text-align:center"></div>
+      				<a class="left carousel-control" href="#myCarousel" data-slide="prev"><span class="glyphicon glyphicon-chevron-left"></span></a>
+     				<a class="right carousel-control" href="#myCarousel" data-slide="next"><span class="glyphicon glyphicon-chevron-right"></span></a>
+    			</div><!-- /.carousel -->
+			</div>
+			<table class="table table-striped" style="width: 320px; margin-bottom:10px; position:absolute; top:190px; left:30px">
 				<thead>
 					<tr>
-						<th style="padding-bottom: 0px">Score</th>
-						<th style="padding-bottom: 0px">Fairway</th>
-						<th style="padding-bottom: 0px">Green</th>
-						<th style="padding-bottom: 0px">Putts</th>
+						<th style="background-color:#4B824B; color:#ffffff">Shot</th>
+						<th style="background-color:#4B824B; color:#ffffff">Club</th>
+						<th style="background-color:#4B824B; color:#ffffff">Penalty</th>
 					</tr>
 				</thead>
-				<tbody>
+				<tbody id="holeShots">
 					<tr>
-						<td id="holeScore">-</td>
-						<td id="holeFairwayHit">-</td>
-						<td id="holeGreenHit">-</td>
-						<td id="holePutts">-</td>
+						<td>#1</td>
+						<td>Driver</td>
+						<td>+</td>
 					</tr>
 				</tbody>
 			</table>
-		  </div>
-		  <div class="item" style="height:90px; text-align:center;"><h4>Hole 2</h4></div>
-		  <div class="item" style="height:90px; text-align:center;"><h4>Hole 3</h4></div>
-      </div>
-      <a class="left carousel-control" href="#myCarousel" data-slide="prev"><span class="glyphicon glyphicon-chevron-left"></span></a>
-      <a class="right carousel-control" href="#myCarousel" data-slide="next"><span class="glyphicon glyphicon-chevron-right"></span></a>
-    </div><!-- /.carousel -->
-				
-			</div> 
-		
-			<div style="width:300px;height:60px;border:#999999 1px solid; background-color: #ffffff; position:absolute; top:70px; right:10px"><h3 style="padding-left:10px">Distance to pin: <span id="distanceToPin">-</span></h3></div> 
+	<!--		<div style="width:300px;height:60px;border:#999999 1px solid; background-color: #ffffff; position:absolute; top:70px; right:10px"><h3 style="padding-left:10px">Distance to pin: <span id="distanceToPin">-</span></h3></div>  -->
 		</div>
 
 		<!-- Javascript -->
@@ -99,11 +90,11 @@
 		<script type="text/javascript" src="js/wicket.src.js"> </script>
 		<script type="text/javascript" src="js/wicket.js"> </script>
 		<script type="text/javascript" src="js/accordion.js"> </script>
+		<script type="text/javascript" src="js/infobox.js"></script>
 		<script type="text/javascript" src="js/addRound_gmap.js"></script>
 		<script type="text/javascript" src="bootstrap/js/bootstrap.min.js"></script>
 		<script type="text/javascript" src="js/typeahead.js"></script>
 	<!--	<script type="text/javascript" src="js/brdyMap.js"></script> -->
 		<script type="text/javascript" src="js/courseTypeahead.js"></script>
-		
 	</body>
 </html>

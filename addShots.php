@@ -7,7 +7,7 @@
 	
 	foreach ($data as $value) {
 		$RoundId = 1;
-		$HoleNum = 1;
+		$HoleNum = $value['holeNum'];
 		$DirOffTarget = $value['dirOffTarget'];
 		$YdsOffFairway = $value['ydsOffFairway'];
 		$YdsOffFairwayCenter = $value['ydsOffFairwayCenter'];

@@ -6,23 +6,29 @@
 //	will need to post the user id and return the appropriate data
 //	$string = $_GET['datastring'];			  
 //	$holenum = $_POST['dataString'];
-  	$avgDrive = mysql_query("SELECT avg(ShotDistance) FROM Shots where ClubNum=1");
+  	$avgDrive = mysql_query("SELECT avg(ShotDistance) FROM Shots where ShotNum=1");
   	$resAvgDrive = mysql_result($avgDrive, 0);
-  	$totalDrives = mysql_query("SELECT Count(*) FROM Shots where ClubNum=1");
+  	$avgDrive1 = mysql_query("SELECT avg(ShotDistance) FROM Shots where ClubNum=1 and ShotNum=1");
+  	$resAvgDrive1 = mysql_result($avgDrive1, 0);
+  	$avgDrive2 = mysql_query("SELECT avg(ShotDistance) FROM Shots where ClubNum=2 and ShotNum=1");
+  	$resAvgDrive2 = mysql_result($avgDrive2, 0);
+  	$avgDrive3 = mysql_query("SELECT avg(ShotDistance) FROM Shots where ClubNum=3 and ShotNum=1");
+  	$resAvgDrive3 = mysql_result($avgDrive3, 0);
+  	$totalDrives = mysql_query("SELECT Count(*) FROM Shots where ShotNum=1");
 	$resTotal = mysql_result($totalDrives, 0); 
-	$_320plus = mysql_query("SELECT Count(*) FROM Shots where ClubNum=1 and ShotDistance>=320");
+	$_320plus = mysql_query("SELECT Count(*) FROM Shots where ShotNum=1 and ShotDistance>=320");
 	$res320plus = mysql_result($_320plus, 0); 
-	$_300320 = mysql_query("SELECT Count(*) FROM Shots where ClubNum=1 and ShotDistance<=320 and ShotDistance>=300");
+	$_300320 = mysql_query("SELECT Count(*) FROM Shots where ShotNum=1 and ShotDistance<=320 and ShotDistance>=300");
 	$res300320 = mysql_result($_300320, 0);
 /*	$_300plus = mysql_query("SELECT Count(*) FROM Shots where ClubNum=1 and ShotDistance>=300");
 	$res300plus = mysql_result($_300plus, 0); */
-	$_280300 = mysql_query("SELECT Count(*) FROM Shots where ClubNum=1 and ShotDistance<=300 and ShotDistance>=280");
+	$_280300 = mysql_query("SELECT Count(*) FROM Shots where ShotNum=1 and ShotDistance<=300 and ShotDistance>=280");
 	$res280300 = mysql_result($_280300, 0);
-	$_260280 = mysql_query("SELECT Count(*) FROM Shots where ClubNum=1 and ShotDistance<=280 and ShotDistance>=260");
+	$_260280 = mysql_query("SELECT Count(*) FROM Shots where ShotNum=1 and ShotDistance<=280 and ShotDistance>=260");
 	$res260280 = mysql_result($_260280, 0);
-	$_240260 = mysql_query("SELECT Count(*) FROM Shots where ClubNum=1 and ShotDistance<=260 and ShotDistance>=240");
+	$_240260 = mysql_query("SELECT Count(*) FROM Shots where ShotNum=1 and ShotDistance<=260 and ShotDistance>=240");
 	$res240260 = mysql_result($_240260, 0);
-	$less240 = mysql_query("SELECT Count(*) FROM Shots where ClubNum=1 and ShotDistance<=240");
+	$less240 = mysql_query("SELECT Count(*) FROM Shots where ShotNum=1 and ShotDistance<=240");
 	$resless240 = mysql_result($less240, 0);
 	$top5drives = mysql_query("select ShotDistance from Shots order by ShotDistance DESC limit 5");
 	$result_array = array();
@@ -34,8 +40,61 @@
 	echo "
 	<h3>Off The Tee - Distance</h3>
 	<hr>
+	<h4 style='text-align:center'>Average Driving Distances</h4>
+	<div style='padding-bottom:30px'>
+	<div id='placeholder' style='width:100%; height:250px;'>
+	<script>
+	$(function () {
+
+var d1 =[".$resAvgDrive1.", 2];
+var d2 =[".$resAvgDrive2.",1];
+var d3 =[".$resAvgDrive3.",0];
+
+var startData = [
+    [d1],
+    [d2],
+	[d3]
+	];
+
+var ticks = [
+    [0, '3 Iron'], [1, '3 Wood'], [2, 'Driver']
+];
+
+var option={
+        series: {
+                bars:{
+                        show: true,
+                        fill: true
+                }
+        },
+        bars: {
+        	barWidth: 0.75,
+        	horizontal:true,
+        	align: 'center',
+        	lineWidth: 1
+        	},
+        xaxis: {
+        	max: 350,
+        	axisLabel: 'Yards',
+        	tickColor: '#f6f6f6',
+        	color:'black'
+        },
+        yaxis: {
+        	ticks: ticks,
+        	axisLabelPadding: 10,
+        	tickColor: '#f6f6f6',
+        },
+    };
+
+$.plot($('#placeholder'),startData,option  );
+	
+	
+});
+</script>
+	</div>
+	</div>
 	<div class='col-md-8'>
-	<h4>Total Drives: ".$resTotal."</h4>
+<!--	<h4>Total Drives: ".$resTotal."</h4> -->
 	<table class='table table-striped' style='border-bottom:1px solid #e6e6e6'>
 		<thead>
 			<tr>
@@ -55,7 +114,7 @@
 	</table>
 	</div>
 	<div class='col-md-4'>
-	<h4>Average Drive: ".round($resAvgDrive,2)."yds</h4>
+<!--	<h4>Average Drive: ".round($resAvgDrive,2)."yds</h4> -->
 	<table class='table table-striped' style='border-bottom:1px solid #e6e6e6'>
 		<thead>
 			<tr>
