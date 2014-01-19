@@ -1,0 +1,119 @@
+OFF THE TEE
+
+*DISTANCE*
+
+5 LONGEST DRIVES
+select ShotDistance from Shots order by ShotDistance DESC limit 5
+
+AVG DRIVING DISTANCE
+SELECT avg(ShotDistance) FROM Shots where ClubNum=1
+
+TOTAL NUMBER OF DRIVES
+SELECT Count(ShotDistance) FROM Shots where ClubNum=1
+
+DRIVING PCT. 320+
+SELECT Count(ShotDistance) FROM Shots where ClubNum=1 and ShotDistance>=320
+divided by total
+
+DRIVING PCT. 300+
+SELECT Count(ShotDistance) FROM Shots where ClubNum=1 and ShotDistance>=300
+divided by total
+
+DRIVING PCT. 300-320
+SELECT Count(ShotDistance) FROM Shots where ClubNum=1 and ShotDistance<=320 and ShotDistance>=300
+divided by total
+
+DRIVING PCT. 280-300
+SELECT Count(ShotDistance) FROM Shots where ClubNum=1 and ShotDistance<=300 and ShotDistance>=280
+divided by total
+
+DRIVING PCT. 260-280
+SELECT Count(ShotDistance) FROM Shots where ClubNum=1 and ShotDistance<=280 and ShotDistance>=260
+divided by total
+
+DRIVING PCT. 240-260
+SELECT Count(ShotDistance) FROM Shots where ClubNum=1 and ShotDistance<=260 and ShotDistance>=240
+divided by total
+
+DRIVING PCT. <=240
+SELECT Count(ShotDistance) FROM Shots where ClubNum=1 and ShotDistance<=240
+divided by total
+
+============================================================================================================
+
+*ACCURACY*
+
+TOTAL NUMBER OF FAIRWAYS
+select count(DISTINCT c.HoleNum) from Shots a INNER JOIN Rounds b ON a.RoundId = b.RoundId INNER JOIN Holes c ON b.CourseId = c.CourseId where a.HoleNum = c.HoleNum and (c.Par = 4 or c.Par = 5)
+
+DRIVING ACCURACY PERCENTAGE
+SELECT Count(*) From Shots where ShotNum=2 and ShotFrom='fairway'
+divided by total
+
+ROUGH TENDENCY
+SELECT Count(*) FROM Shots where ShotNum=2 and ShotFrom='rough'
+divided by total
+
+LEFT ROUGH TENDENCY
+SELECT Count(*) FROM Shots a INNER JOIN (SELECT RoundId, HoleNum FROM Shots where ShotNum=2 and ShotFrom='rough') AS b where a.RoundId = b.RoundId and a.HoleNum = b.HoleNum and a.ShotNum=1 and a.DirOffTarget='L'
+divided by total
+
+RIGHT ROUGH TENDENCY
+SELECT Count(*) FROM Shots a INNER JOIN (SELECT RoundId, HoleNum FROM Shots where ShotNum=2 and ShotFrom='rough') AS b where a.RoundId = b.RoundId and a.HoleNum = b.HoleNum and a.ShotNum=1 and a.DirOffTarget='R'
+divided by total
+
+FAIRWAY BUNKER TENDENCY
+SELECT Count(*) FROM Shots where ShotNum=2 and ShotFrom='fairwaybunker'
+divided by total
+
+DISTANCE FROM EDGE OF FAIRWAY
+SELECT avg(YdsOffFairway) FROM Shots where YdsOffFairway > 0
+
+DISTANCE FROM CENTER OF FAIRWAY
+SELECT avg(YdsOffFairwayCenter) FROM Shots where YdsOffFairwayCenter > 0
+
+----------------------------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------------------------
+
+APPROACH THE GREEN
+
+*GREENS IN REGULATION*
+
+TOTAL NUMBER OF HOLES/GREENS
+SELECT COUNT(DISTINCT RoundId, HoleNum) AS a FROM Shots
+
+GREENS IN REGULATION PERCENTAGE
+SELECT count(*) FROM Shots a INNER JOIN Rounds b ON a.RoundId = b.RoundId INNER JOIN Holes c ON b.CourseId = c.CourseId where a.HoleNum = c.HoleNum and a.ShotNum = c.Par - 1 and a.ShotFrom='green'
+divided by total
+
+GIR % FROM 200+ YDS
+SELECT count(*) FROM Shots a INNER JOIN Rounds b ON a.RoundId = b.RoundId INNER JOIN Holes c ON b.CourseId = c.CourseId where a.HoleNum = c.HoleNum and a.ShotNum = c.Par - 1 and a.ShotFrom='green'
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

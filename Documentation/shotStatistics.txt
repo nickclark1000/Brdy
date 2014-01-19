@@ -1,0 +1,19 @@
+Shot Statistics
+
+Driving
+1) % of fairways hit per round
+2) avg % of fairways hit
+3) avg driving distance
+
+Greens 
+1) % of greens hit in regulation per round
+2) avg % of greens hit
+3) avg proximity to hole
+
+Clubs
+1) P of hitting fairway by club
+2) P of hitting green by club
+	a) in fairway
+	b) in rough
+	c) in fairway bunker
+3) proximity to hole vs distance from pin

@@ -1,0 +1,264 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Brdy Golf - Short Game Test</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="description" content="">
+    <meta name="author" content="Nicholas Clark" >
+
+    <!-- Le styles -->
+    <link href="bootstrap/css/bootstrap.css" rel="stylesheet">
+    <link href="css/shortgame.css" rel="stylesheet"> 
+    <style>
+      body {
+        padding-top: 60px; /* 60px to make the container go all the way to the bottom of the topbar */
+        background-color: #e6e6e6;
+      }
+    </style>
+    <link href="bootstrap/css/bootstrap-responsive.css" rel="stylesheet">
+
+    <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script src="../assets/js/html5shiv.js"></script>
+    <![endif]-->
+
+    <!-- Fav and touch icons -->
+    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="../assets/ico/apple-touch-icon-144-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="../assets/ico/apple-touch-icon-114-precomposed.png">
+      <link rel="apple-touch-icon-precomposed" sizes="72x72" href="../assets/ico/apple-touch-icon-72-precomposed.png">
+                    <link rel="apple-touch-icon-precomposed" href="../assets/ico/apple-touch-icon-57-precomposed.png">
+                                   <link rel="shortcut icon" href="../assets/ico/favicon.png">
+  </head>
+
+  <body>
+
+    <div class="navbar navbar-inverse navbar-fixed-top">
+      <div class="navbar-inner" style="background-image: linear-gradient(to bottom, #144f14, #0E370E);">
+        <div class="container">
+      <!--    <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button> -->
+          <a class="brand" href="#">Short Game Test</a>
+        </div>
+      </div>
+<!--      <div class="infobar">
+      		<table >
+      			<thead>
+					<tr>
+						<th>Bunker</th>
+						<th>Wedge</th>
+						<th>Chip</th>
+						<th>Pitch</th>
+						<th>Long Putt</th>
+						<th>Short Putt</th>
+					</tr>      			
+      			</thead>
+      			<tbody>
+      				<tr>
+      					<td>-</td>
+      					<td>-</td>
+      					<td>-</td>
+      					<td>-</td>
+      					<td>-</td>
+      					<td>-</td>
+      				</tr>
+      			</tbody>
+      		</table>
+      </div> -->
+    </div>
+
+    <div class="container">
+<!-- bunker shot test card -->      
+      <div class="testcard">
+      		<h3 class="cardheader">Bunker Shot <p id="bunkerpts" class="testpts">0</p></h3>
+      		<p class="cardsubheader">10 shots - any lie</p>
+      		<hr style="margin:10px 0px;">
+      		<button class="btn btn-info ptButton" id="bunker1">Holed : 3pts</button>
+      		<div id="bunkerChk1" style="float:center; display:inline; margin-left:5px;"></div>
+      		<div id="bunkerRmv1" style="float:right; display:none;"><img src="img/remove.png" alt="remove"></div>
+      		<br>
+      		<button class="btn btn-info ptButton" id="bunker2">0 - 5 ft : 2pts</button>
+      		<div id="bunkerChk2" style="float:center; display:inline; margin-left:5px;"></div>
+      		<div id="bunkerRmv2" style="float:right; display:none;"><img src="img/remove.png" alt="remove"></div>
+      		<br>
+      		<button class="btn btn-info ptButton" id="bunker3">5 - 10 ft : 1pt</button>
+      		<div id="bunkerChk3" style="float:center; display:inline; margin-left:5px;"></div>
+      		<div id="bunkerRmv3" style="float:right; display:none;"><img src="img/remove.png" alt="remove"></div>
+      		<br>
+      		<button class="btn btn-info ptButton" id="bunker4">10 - 15 ft : 0pt</button>
+      		<div id="bunkerChk4" style="float:center; display:inline; margin-left:5px;"></div>
+      		<div id="bunkerRmv4" style="float:right; display:none;"><img src="img/remove.png" alt="remove"></div>
+      		<br>
+      		<button class="btn btn-info ptButton" id="bunker5">>15 ft : -1pt</button>
+      		<div id="bunkerChk5" style="float:center; display:inline; margin-left:5px;"></div>
+      		<div id="bunkerRmv5" style="float:right; display:none;"><img src="img/remove.png" alt="remove"></div>
+
+			<button class="btn btn-success"style="width:100%;" id="bunkerSubmit">Save</button>     
+      </div>
+<!-- wedge shot test card -->      
+      <div class="testcard">
+      		<h3 class="cardheader">Wedge Shot <p id="wedgepts" class="testpts">0</p></h3>
+      		<p class="cardsubheader">10 shots - 2 from 20, 40, 60, 80, 100 yds</p>
+      		<hr style="margin:10px 0px;">
+      		<button class="btn btn-info ptButton" id="wedge1">Hit Target : 3pts</button>
+      		<div id="wedgeChk1" style="float:center; display:inline; margin-left:5px;"></div>
+      		<div id="wedgeRmv1" style="float:right; display:none;"><img src="img/remove.png" alt="remove"></div>
+      		<br>
+      		<button class="btn btn-info ptButton" id="wedge2">0 - 10 ft : 2pts</button>
+      		<div id="wedgeChk2" style="float:center; display:inline; margin-left:5px;"></div>
+      		<div id="wedgeRmv2" style="float:right; display:none;"><img src="img/remove.png" alt="remove"></div>
+      		<br>
+      		<button class="btn btn-info ptButton" id="wedge3">10 - 20 ft : 1pt</button>
+      		<div id="wedgeChk3" style="float:center; display:inline; margin-left:5px;"></div>
+      		<div id="wedgeRmv3" style="float:right; display:none;"><img src="img/remove.png" alt="remove"></div>
+      		<br>
+      		<button class="btn btn-info ptButton" id="wedge4">20 - 30 ft : 0pt</button>
+      		<div id="wedgeChk4" style="float:center; display:inline; margin-left:5px;"></div>
+      		<div id="wedgeRmv4" style="float:right; display:none;"><img src="img/remove.png" alt="remove"></div>
+      		<br>
+      		<button class="btn btn-info ptButton" id="wedge5">>30 ft : -1pt</button>
+      		<div id="wedgeChk5" style="float:center; display:inline; margin-left:5px;"></div>
+      		<div id="wedgeRmv5" style="float:right; display:none;"><img src="img/remove.png" alt="remove"></div>
+
+			<button class="btn btn-success"style="width:100%;" id="wedgeSubmit">Save</button>     
+      </div>
+      
+      <!-- chip shot test card -->      
+      <div class="testcard">
+      		<h3 class="cardheader">Chip Shot <p id="chippts" class="testpts">0</p></h3>
+      		<p class="cardsubheader">10 shots - 5 from 40 ft; 5 from 50 ft</p>
+      		<hr style="margin:10px 0px;">
+      		<button class="btn btn-info ptButton" id="chip1">Holed : 3pts</button>
+      		<div id="chipChk1" style="float:center; display:inline; margin-left:5px;"></div>
+      		<div id="chipRmv1" style="float:right; display:none;"><img src="img/remove.png" alt="remove"></div>
+      		<br>
+      		<button class="btn btn-info ptButton" id="chip2">0 - 3 ft : 2pts</button>
+      		<div id="chipChk2" style="float:center; display:inline; margin-left:5px;"></div>
+      		<div id="chipRmv2" style="float:right; display:none;"><img src="img/remove.png" alt="remove"></div>
+      		<br>
+      		<button class="btn btn-info ptButton" id="chip3">3 - 6 ft : 1pt</button>
+      		<div id="chipChk3" style="float:center; display:inline; margin-left:5px;"></div>
+      		<div id="chipRmv3" style="float:right; display:none;"><img src="img/remove.png" alt="remove"></div>
+      		<br>
+      		<button class="btn btn-info ptButton" id="chip4">6 - 9 ft : 0pt</button>
+      		<div id="chipChk4" style="float:center; display:inline; margin-left:5px;"></div>
+      		<div id="chipRmv4" style="float:right; display:none;"><img src="img/remove.png" alt="remove"></div>
+      		<br>
+      		<button class="btn btn-info ptButton" id="chip5">>9 ft : -1pt</button>
+      		<div id="chipChk5" style="float:center; display:inline; margin-left:5px;"></div>
+      		<div id="chipRmv5" style="float:right; display:none;"><img src="img/remove.png" alt="remove"></div>
+
+			<button class="btn btn-success"style="width:100%;" id="chipSubmit">Save</button>     
+      </div>
+      
+      <!-- pitch shot test card -->      
+      <div class="testcard">
+      		<h3 class="cardheader">Pitch Shot <p id="pitchpts" class="testpts">0</p></h3>
+      		<p class="cardsubheader">10 shots - 15 yds from edge of green, 10-15yds to hole</p>
+      		<hr style="margin:10px 0px;">
+      		<button class="btn btn-info ptButton" id="pitch1">Hit Target : 3pts</button>
+      		<div id="pitchChk1" style="float:center; display:inline; margin-left:5px;"></div>
+      		<div id="pitchRmv1" style="float:right; display:none;"><img src="img/remove.png" alt="remove"></div>
+      		<br>
+      		<button class="btn btn-info ptButton" id="pitch2">0 - 5 ft : 2pts</button>
+      		<div id="pitchChk2" style="float:center; display:inline; margin-left:5px;"></div>
+      		<div id="pitchRmv2" style="float:right; display:none;"><img src="img/remove.png" alt="remove"></div>
+      		<br>
+      		<button class="btn btn-info ptButton" id="pitch3">5 - 10 ft : 1pt</button>
+      		<div id="pitchChk3" style="float:center; display:inline; margin-left:5px;"></div>
+      		<div id="pitchRmv3" style="float:right; display:none;"><img src="img/remove.png" alt="remove"></div>
+      		<br>
+      		<button class="btn btn-info ptButton" id="pitch4">10 - 15 ft : 0pt</button>
+      		<div id="pitchChk4" style="float:center; display:inline; margin-left:5px;"></div>
+      		<div id="pitchRmv4" style="float:right; display:none;"><img src="img/remove.png" alt="remove"></div>
+      		<br>
+      		<button class="btn btn-info ptButton" id="pitch5">>15 ft : -1pt</button>
+      		<div id="pitchChk5" style="float:center; display:inline; margin-left:5px;"></div>
+      		<div id="pitchRmv5" style="float:right; display:none;"><img src="img/remove.png" alt="remove"></div>
+
+			<button class="btn btn-success"style="width:100%;" id="pitchSubmit">Save</button>     
+      </div>
+      
+      <!-- longputt shot test card -->      
+      <div class="testcard">
+      		<h3 class="cardheader">Lag Putting<p id="longputtpts" class="testpts">0</p></h3>
+      		<p class="cardsubheader">10 putts - 2 from 20, 30, 40, 50, 60 ft</p>
+      		<hr style="margin:10px 0px;">
+      		<button class="btn btn-info ptButton" id="longputt1">Holed : 3pts</button>
+      		<div id="longputtChk1" style="float:center; display:inline; margin-left:5px;"></div>
+      		<div id="longputtRmv1" style="float:right; display:none;"><img src="img/remove.png" alt="remove"></div>
+      		<br>
+      		<button class="btn btn-info ptButton" id="longputt2">0 - 3 ft : 2pts</button>
+      		<div id="longputtChk2" style="float:center; display:inline; margin-left:5px;"></div>
+      		<div id="longputtRmv2" style="float:right; display:none;"><img src="img/remove.png" alt="remove"></div>
+      		<br>
+      		<button class="btn btn-info ptButton" id="longputt3">3 - 6 ft : 1pt</button>
+      		<div id="longputtChk3" style="float:center; display:inline; margin-left:5px;"></div>
+      		<div id="longputtRmv3" style="float:right; display:none;"><img src="img/remove.png" alt="remove"></div>
+      		<br>
+      		<button class="btn btn-info ptButton" id="longputt4">6 - 9 ft : 0pt</button>
+      		<div id="longputtChk4" style="float:center; display:inline; margin-left:5px;"></div>
+      		<div id="longputtRmv4" style="float:right; display:none;"><img src="img/remove.png" alt="remove"></div>
+      		<br>
+      		<button class="btn btn-info ptButton" id="longputt5">>9 ft : -1pt</button>
+      		<div id="longputtChk5" style="float:center; display:inline; margin-left:5px;"></div>
+      		<div id="longputtRmv5" style="float:right; display:none;"><img src="img/remove.png" alt="remove"></div>
+
+			<button class="btn btn-success"style="width:100%;" id="longputtSubmit">Save</button>     
+      </div>
+      
+      <!-- shortputt shot test card -->      
+      <div class="testcard">
+      		<h3 class="cardheader">Putting Skills<p id="shortputtpts" class="testpts">0</p></h3>
+      		<p class="cardsubheader">20 putts - 2 from 20, 40, 60, 80, 100 yds</p>
+      		<hr style="margin:10px 0px;">
+      		<button class="btn btn-info ptButton" id="shortputt1">Hit Target : 3pts</button>
+      		<div id="shortputtChk1" style="float:center; display:inline; margin-left:5px;"></div>
+      		<div id="shortputtRmv1" style="float:right; display:none;"><img src="img/remove.png" alt="remove"></div>
+      		<br>
+      		<button class="btn btn-info ptButton" id="shortputt2">0 - 10 ft : 2pts</button>
+      		<div id="shortputtChk2" style="float:center; display:inline; margin-left:5px;"></div>
+      		<div id="shortputtRmv2" style="float:right; display:none;"><img src="img/remove.png" alt="remove"></div>
+      		<br>
+      		<button class="btn btn-info ptButton" id="shortputt3">10 - 20 ft : 1pt</button>
+      		<div id="shortputtChk3" style="float:center; display:inline; margin-left:5px;"></div>
+      		<div id="shortputtRmv3" style="float:right; display:none;"><img src="img/remove.png" alt="remove"></div>
+      		<br>
+      		<button class="btn btn-info ptButton" id="shortputt4">20 - 30 ft : 0pt</button>
+      		<div id="shortputtChk4" style="float:center; display:inline; margin-left:5px;"></div>
+      		<div id="shortputtRmv4" style="float:right; display:none;"><img src="img/remove.png" alt="remove"></div>
+      		<br>
+      		<button class="btn btn-info ptButton" id="shortputt5">>30 ft : -1pt</button>
+      		<div id="shortputtChk5" style="float:center; display:inline; margin-left:5px;"></div>
+      		<div id="shortputtRmv5" style="float:right; display:none;"><img src="img/remove.png" alt="remove"></div>
+
+			<button class="btn btn-success"style="width:100%;" id="shortputtSubmit">Save</button>     
+      </div>
+    </div>
+
+
+    <!-- Le javascript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+ 
+	 <script src="http://code.jquery.com/jquery-1.8.3.js"></script>
+    <script type="text/javascript" src="js/shortgame.js"></script>
+    <script src="../assets/js/bootstrap-transition.js"></script>
+    <script src="../assets/js/bootstrap-alert.js"></script>
+    <script src="../assets/js/bootstrap-modal.js"></script>
+    <script src="../assets/js/bootstrap-dropdown.js"></script>
+    <script src="../assets/js/bootstrap-scrollspy.js"></script>
+    <script src="../assets/js/bootstrap-tab.js"></script>
+    <script src="../assets/js/bootstrap-tooltip.js"></script>
+    <script src="../assets/js/bootstrap-popover.js"></script>
+    <script src="../assets/js/bootstrap-button.js"></script>
+    <script src="../assets/js/bootstrap-collapse.js"></script>
+    <script src="../assets/js/bootstrap-carousel.js"></script>
+    <script src="../assets/js/bootstrap-typeahead.js"></script>
+
+  </body>
+</html>

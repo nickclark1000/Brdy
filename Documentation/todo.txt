@@ -1,0 +1,10 @@
+- cycle through each teeblock for the first tee shot
+- stats , accuracy improvements
+- search by course
+- integrate round ids
+- incorporate bunkers
+- incorporate club number
+	- include as part of info window
+	- alert
+	- 
+- penalty shots (trigger another shot when user clicks in water)

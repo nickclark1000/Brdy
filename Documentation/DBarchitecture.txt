@@ -1,0 +1,49 @@
+Shots
+
+RoundId, HoleNum, ShotNum, ShotPosition, ShotFrom,	DistanceToHole, ShotDistance,	ClubNum,	YdsOffFairway, YdsOffFairwayCenter,	DirOffTarget,	
+1,		   1,	     1,		POINT(1 1),  teemarker,		135,		120,			1,			10,					20,				L			
+
+==================================
+ShotReference
+
+ShotId, RoundId, HoleNum, ShotNum
+
+==================================
+HoleEvents
+
+RoundId, HoleNum, FairwayHit, GIR
+
+==================================
+Rounds
+
+RoundId, UserId, CourseId, FairwaysHit, IsDeleted
+
+===================================
+Courses
+
+CourseId, CourseName, CourseLocation
+
+===================================
+Holes
+
+CourseId, HoleId, HoleNum
+
+===================================
+HoleFeatures
+
+HoleId, FeatureTypeId, SubFeatureTypeId, WktElement
+
+===================================
+FeatureTypes
+
+FeatureTypeId, FeatureTypeDesc
+
+===================================
+SubFeatureTypes
+
+FeatureTypeId,	SubFeatureTypeId,	SubFeatureTypeDesc
+
+===================================
+Clubs
+
+UserId, ClubNum, ClubDesc

@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		 <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+		 
+	<!--	 <link href="basic.css" rel="stylesheet" type="text/css" /> -->
+		 <link href="spruce.css" rel="stylesheet"/>
+		 <link href="http://code.jquery.com/ui/1.9.2/themes/base/jquery-ui.css" rel="stylesheet">    
+		 
+		
+	</head>    
+	<header> 
+		<div id="header_wrapper">
+			<img class="logo" src="images/golf.jpg" alt="Golf club and ball">
+			<nav>
+				<ul>
+					<li> Home </li>
+					<li> About Us </li>			
+				</ul>		
+			</nav>
+		</div>	
+	</header>
+	<input type="text" placeholder="Enter course name..." size="50"/> <button> Search </button>
+	<form class="formstyle" action="newCoursesSloan.php" method="post" style="display:none">
+		<div>
+    		Course Name: <input type="text" name="inputName" value=""/> <br />
+    		Yardage: <input type="text" name="inputYardage" value=""/> <br />
+    		<input type="submit" name="submitBtn"/>
+    	</div>
+   </form>
+	<body>
+		<div class="container-fluid">
+			<div class="row-fluid">    
+	    		<div id="map_canvas" style="margin-left:300px height:100%"></div>
+				<div style="position:absolute; width:280px; height: 100%; overflow:auto; float:left; padding-left:10px; padding-right:10px;">
+					<div class="accordionButton">Course Summary</div>
+					<div class="courseSummary">Content 1 today we went to the store and played golf then did a bunch of other things then we went to the beat<br /><br /><br /><br /><br /><br /><br /><br />Long Example</div>
+					<div class="accordionButton">Hole 1</div>
+					<div class="accordionContent">Content 2<br /> <img src="golftee button.png" alt="golf tee block" height="75" width="75"><br /><br /><br /><br />Medium Example</div>
+					<div class="accordionButton">Hole 2</div>
+					<div class="accordionContent">Content 1<br />Short Example</div>
+					<div class="accordionButton">Hole 3</div>
+					<div class="accordionContent">Content 4<br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />Extra Long Example</div>
+					<div class="accordionButton">Hole 4</div>
+					<div class="accordionContent">Content 1<br />Short Example</div>
+					<div class="accordionButton">Hole 5</div>
+					<div class="accordionContent">Content 1<br />Short Example</div>
+					<div class="accordionButton">Hole 6</div>
+					<div class="accordionContent">Content 1<br />Short Example</div>
+					<div class="accordionButton">Hole 7</div>
+					<div class="accordionContent">Content 1<br />Short Example</div>
+					<div class="accordionButton">Hole 8</div>
+					<div class="accordionContent">Content 1<br />Short Example</div>
+					<div class="accordionButton">Hole 9</div>
+					<div class="accordionContent">Content 1<br />Short Example</div>
+					<div class="accordionButton">Hole 10</div>
+					<div class="accordionContent">Content 1<br />Short Example</div>
+					<div class="accordionButton">Hole 11</div>
+					<div class="accordionContent">Content 1<br />Short Example</div>
+					<div class="accordionButton">Hole 12</div>
+					<div class="accordionContent">Content 1<br />Short Example</div>
+					<div class="accordionButton">Hole 13</div>
+					<div class="accordionContent">Content 1<br />Short Example</div>
+					<div class="accordionButton">Hole 14</div>
+					<div class="accordionContent">Content 1<br />Short Example</div>
+					<div class="accordionButton">Hole 15</div>
+					<div class="accordionContent">Content 1<br />Short Example</div>
+					<div class="accordionButton">Hole 16</div>
+					<div class="accordionContent">Content 1<br />Short Example</div>
+					<div class="accordionButton">Hole 17</div>
+					<div class="accordionContent">Content 1<br />Short Example</div>
+					<div class="accordionButton">Hole 18</div>
+					<div class="accordionContent">Content 1<br />Short Example</div>
+				</div>
+			</div>
+		</div>
+		
+		 <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDMEWbu-DxkBYqkZa-gNuaLPPoAm0CEHCM&sensor=false&libraries=drawing"> </script>
+		 <script src="http://code.jquery.com/jquery-1.8.3.js"></script>
+		 <script src="http://code.jquery.com/ui/1.9.2/jquery-ui.js"></script>
+		 <script type="text/javascript" src="accordion.js"> </script>
+		 <script type="text/javascript" src="googlemaps.js"> </script>
+		 <script src="bootstrap/js/jquery.js"></script>
+		 <script src="bootstrap/js/bootstrap-transition.js"></script>
+		 <script src="bootstrap/js/bootstrap-alert.js"></script>
+		 <script src="bootstrap/js/bootstrap-modal.js"></script>
+		 <script src="bootstrap/js/bootstrap-dropdown.js"></script>
+		 <script src="bootstrap/js/bootstrap-scrollspy.js"></script>
+		 <script src="bootstrap/js/bootstrap-tab.js"></script>
+		 <script src="bootstrap/js/bootstrap-tooltip.js"></script>
+		 <script src="bootstrap/js/bootstrap-popover.js"></script>
+		 <script src="bootstrap/js/bootstrap-button.js"></script>
+		 <script src="bootstrap/js/bootstrap-collapse.js"></script>
+		 <script src="bootstrap/js/bootstrap-carousel.js"></script>
+		 <script src="bootstrap/js/bootstrap-typeahead.js"></script>
+		 <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?libraries=places,drawing&sensor=false"></script>
+		 <script src="jquery-1.8.2.js"></script> 
+		 
+	</body>
+</html>

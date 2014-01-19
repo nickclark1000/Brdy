@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+    <link href="css/basic.css" rel="stylesheet" type="text/css" />
+    <style type="text/css">
+      html { height: 100% }
+      body { height: 86%; margin: 0; padding: 0 }
+      
+    </style>
+    <script type="text/javascript"
+      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDMEWbu-DxkBYqkZa-gNuaLPPoAm0CEHCM&sensor=false&libraries=drawing">
+    </script>
+    <link rel="stylesheet" href="http://code.jquery.com/ui/1.9.2/themes/base/jquery-ui.css">
+    <script src="http://code.jquery.com/jquery-1.8.3.js"></script>
+    <script src="http://code.jquery.com/ui/1.9.2/jquery-ui.js"></script>
+    <script type="text/javascript" src="js/accordion.js"> </script>
+    
+</head>  
+    <script type="text/javascript">
+    function initialize() {
+        var mapOptions = {
+          center: new google.maps.LatLng(43.667872,-79.715853),
+          zoom: 16,
+          mapTypeId: google.maps.MapTypeId.SATELLITE
+        };
+        var map = new google.maps.Map(document.getElementById("map_canvas"),mapOptions);
+        
+        var drawingManager = new google.maps.drawing.DrawingManager({
+      		drawingMode: google.maps.drawing.OverlayType.POLYGON,
+      		drawingControl: true,
+      		drawingControlOptions: {
+      		  position: google.maps.ControlPosition.TOP_CENTER,
+      		  drawingModes: [google.maps.drawing.OverlayType.MARKER,
+    							  google.maps.drawing.OverlayType.CIRCLE,
+   							     google.maps.drawing.OverlayType.POLYGON,
+    							  google.maps.drawing.OverlayType.POLYLINE]
+    									  },
+      		markerOptions: {
+        		draggable: true
+      			}
+      
+    		});    
+        drawingManager.setMap(map);  
+        
+			// var html = "<table>" +
+                 //"<tr><td>Name:</td> <td><input type='text' id='name'/> </td> </tr>" +
+                 //"<tr><td></td><td><input type='button' value='Save & Close' onclick='saveData()'/></td></tr>";
+						  		
+        
+    		google.maps.event.addListener(drawingManager,'overlaycomplete',function(marker) {
+        			 
+       	 	 var form =    $(".formstyle").clone().show();
+       		 var infowindowcontent = form[0];
+    			 var infowindow = new google.maps.InfoWindow({
+            		content: infowindowcontent
+        			}); 
+        
+				 google.maps.event.addListener(marker.overlay,'click',function() {
+					infowindow.open(map,marker.overlay);   
+   					}); 
+   					
+   						
+		
+				 infowindow.open(map,marker.overlay);
+		   
+			//when user clicks on the "submit" button
+       		form.submit({name: "marker"}, function (event) {
+            	//prevent the default form behavior (which would refresh the page)
+            	event.preventDefault();
+				
+            	//put all form elements in a "data" object
+          		var data = {
+                	//name: $("input[name=name]", this).val(),
+					name: $("input[name=inputName]", this).val(),
+					//yardage: $("input[name=yardage]", this).val(),
+                	yardage: $("input[name=inputYardage]", this).val(),
+					//lat: event.data.marker.overlay.getPosition().lat(),	
+                	lat: marker.overlay.getPosition().lat(), 
+					//lon: event.data.marker.overlay.getPosition().lng()
+                	lon: marker.overlay.getPosition().lng() 
+            		};
+            		//trace(data)		//**<--- What is this?
+					
+         		//send the results to the PHP script that adds the point to the database
+				$.post("newCoursesSloan.php", data);
+            	return false;
+        	}); 		  
+    	});
+    	
+		google.maps.event.addListener(drawingManager,'polygoncomplete',function(polygon) {
+        	var coordinates = (polygon.getPath().getArray());
+        	$.post("newCoursesSloan.php",coordinates);		 
+       	  
+    	});    	
+    	
+    }  
+      
+      google.maps.event.addDomListener(window,'load',initialize);
+	</script>
+      
+  <header> 
+	<div id="header_wrapper">
+		<img class="logo" src="images/golf.jpg" alt="Golf club and ball">
+		<nav>
+			<ul>
+				<li> Home </li>
+				<li> About Us </li>			
+			</ul>		
+		</nav>
+	</div>	
+</header>
+	<input type="text" placeholder="Enter course name..." size="50"/> <button> Search </button>
+	<form class="formstyle" action="newCoursesSloan.php" method="post" style="display:none">
+		<div>
+    	Course Name: <input type="text" name="inputName" value=""/> <br />
+    	Yardage: <input type="text" name="inputYardage" value=""/>
+    	<br />
+    	<input type="submit" name="submitBtn"/>
+    	</div>
+   </form>
+
+<body>
+
+    <div id="map_canvas" style="width:80%; height:100%"></div>
+
+	<div id="wrapper">
+		<div class="accordionButton">Course Summary</div>
+		<div class="courseSummary">Content 1 today we went to the store and played golf then did a bunch of other things then we went to the beat<br /><br /><br /><br /><br /><br /><br /><br />Long Example</div>
+		<div class="accordionButton">Hole 1</div>
+		<div class="accordionContent">Content 2<br /> <img src="golftee button.png" alt="golf tee block" height="75" width="75"><br /><br /><br /><br />Medium Example</div>
+		<div class="accordionButton">Hole 2</div>
+		<div class="accordionContent">Content 1<br />Short Example</div>
+		<div class="accordionButton">Hole 3</div>
+		<div class="accordionContent">Content 4<br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />Extra Long Example</div>
+		<div class="accordionButton">Hole 4</div>
+		<div class="accordionContent">Content 1<br />Short Example</div>
+		<div class="accordionButton">Hole 5</div>
+		<div class="accordionContent">Content 1<br />Short Example</div>
+		<div class="accordionButton">Hole 6</div>
+		<div class="accordionContent">Content 1<br />Short Example</div>
+		<div class="accordionButton">Hole 7</div>
+		<div class="accordionContent">Content 1<br />Short Example</div>
+		<div class="accordionButton">Hole 8</div>
+		<div class="accordionContent">Content 1<br />Short Example</div>
+		<div class="accordionButton">Hole 9</div>
+		<div class="accordionContent">Content 1<br />Short Example</div>
+		<div class="accordionButton">Hole 10</div>
+		<div class="accordionContent">Content 1<br />Short Example</div>
+		<div class="accordionButton">Hole 11</div>
+		<div class="accordionContent">Content 1<br />Short Example</div>
+		<div class="accordionButton">Hole 12</div>
+		<div class="accordionContent">Content 1<br />Short Example</div>
+		<div class="accordionButton">Hole 13</div>
+		<div class="accordionContent">Content 1<br />Short Example</div>
+		<div class="accordionButton">Hole 14</div>
+		<div class="accordionContent">Content 1<br />Short Example</div>
+		<div class="accordionButton">Hole 15</div>
+		<div class="accordionContent">Content 1<br />Short Example</div>
+		<div class="accordionButton">Hole 16</div>
+		<div class="accordionContent">Content 1<br />Short Example</div>
+		<div class="accordionButton">Hole 17</div>
+		<div class="accordionContent">Content 1<br />Short Example</div>
+		<div class="accordionButton">Hole 18</div>
+		<div class="accordionContent">Content 1<br />Short Example</div>
+	</div>
+ 
+
+</body>
+    
+     <!-- Le javascript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+	<script src="bootstrap/js/jquery.js"></script>
+    <script src="bootstrap/js/bootstrap-transition.js"></script>
+    <script src="bootstrap/js/bootstrap-alert.js"></script>
+    <script src="bootstrap/js/bootstrap-modal.js"></script>
+    <script src="bootstrap/js/bootstrap-dropdown.js"></script>
+    <script src="bootstrap/js/bootstrap-scrollspy.js"></script>
+    <script src="bootstrap/js/bootstrap-tab.js"></script>
+    <script src="bootstrap/js/bootstrap-tooltip.js"></script>
+    <script src="bootstrap/js/bootstrap-popover.js"></script>
+    <script src="bootstrap/js/bootstrap-button.js"></script>
+    <script src="bootstrap/js/bootstrap-collapse.js"></script>
+    <script src="bootstrap/js/bootstrap-carousel.js"></script>
+    <script src="bootstrap/js/bootstrap-typeahead.js"></script>
+    <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?libraries=places,drawing&sensor=false"></script>
+    <script src="jquery-1.8.2.js"></script>
+
+</html>
