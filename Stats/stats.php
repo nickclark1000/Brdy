@@ -60,7 +60,7 @@
 				<li><a href="#" data-toggle="collapse" data-target="#approachthegreen">Approach the Green</a></li>
 					<div class="collapse" id="approachthegreen">
 						<ul>
-							<li><a href="#">Greens in Regulation</a></li>
+							<li><a id="approachGreenInReg" href="#">Greens in Regulation</a></li>
 							<li><a href="#">Accuracy from Fairway</a></li>
 							<li><a href="#">Accuracy from Rough</a></li>
 							<li><a href="#">Scoring</a></li>
@@ -91,11 +91,11 @@
 				<li><a href="#" data-toggle="collapse" data-target="#scoring">Scoring</a></li>
 					<div class="collapse" id="scoring">
 						<ul>
-							<li><a href="#">Overall</a></li>
-							<li><a href="#">Under Par Scoring</a></li>
-							<li><a href="#">Over Par Scoring</a></li>
-							<li><a href="#">Scoring by Round</a></li>
-							<li><a href="#">Par 3,4,5 Scoring</a></li>
+							<li><a href="">Overall</a></li>
+							<li><a href="">Under Par Scoring</a></li>
+							<li><a href="">Over Par Scoring</a></li>
+							<li><a href="">Scoring by Round</a></li>
+							<li><a href="">Par 3,4,5 Scoring</a></li>
 							<li><a href="#">Front 9 Scoring</a></li>
 							<li><a href="#">Back 9 Scoring</a></li>
 							<li><a href="#">Early Scoring</a></li>
@@ -108,7 +108,16 @@
 			</ul>
 		</div>
 		<div class="col-md-10" style="height:100%; border-left: 5px solid #e6e6e6">
-			<div id="reportBody"></div>
+			<div id="reportBody">
+				<div id="approach-the-green" style="display:none">
+					<h3>APPROACH THE GREEN</h3>
+					<h4 style='color:#999999'>GREENS IN REGULATION</h4>
+					<hr>
+					<span>Display: <select id="filter1"><option value="1">Distance Ranges</option><option value='2'>Clubs</option></select></span>
+					<span>Shots from: <select id="filter2" autocomplete="off" onchange="shotFromChange()"><option value="1" selected="selected">All shots</option><option value='fairway'>Fairway</option><option value='rough'>Rough</option><option value='fairwaybunker'>Fairway bunker</option><option value='teemarker'>Off the tee</option></select></span>
+					<div id="approach-the-green-data"></div>
+				</div> 
+			</div>
 			
 		</div>
 	 </div>

@@ -22,7 +22,7 @@ function initialize() {
  		},
 		markerOptions: {
   			draggable: true,
-  			icon: 'img/marker.png',
+  			icon: '../Common/img/marker.png',
 		}
 	});
   
@@ -92,7 +92,7 @@ function initialize() {
 					};
 				
 	   				//send the results to the PHP script that adds the point to the database
-					$.post("newpointfeature.php", pointdata);	
+					$.post("addPointFeature.php", pointdata);	
 	  		});	  
   	});
 
@@ -131,16 +131,41 @@ function initialize() {
 
  	//adding course features via polylinecomplete
  	google.maps.event.addListener(drawingManager,'polylinecomplete',function(polyline) {
-		var path = polyline.getPath();
-		var wktelement = "'LINESTRING(";
-		for (var i =0; i < path.length; i++) {
-		        var lat_i = path.getAt(i).lat();
-		        var lng_i = path.getAt(i).lng();
-		        wktelement += lng_i + " "+ lat_i + ",";
-		}
-		wktelement = wktelement.slice(0, -1);
-		wktelement += ")'";
- 		$.post("newpolylinefeature.php",{wktelement: wktelement});
+		var featureform = $(".polylineform").clone().show();
+	  	var infowindowfeaturecontent = featureform[0];
+	  	var infofeaturewindow = new google.maps.InfoWindow({
+			content: infowindowfeaturecontent
+	  	});
+	  	
+	  	//need to get a lat/lon pair to set where to display the info window
+	  	var polylength=polyline.getPath().getArray().length;
+	    var lastarray=polyline.getPath().getAt(polylength-1);	
+	  	infofeaturewindow.setPosition(lastarray);
+	  		
+	  	infofeaturewindow.open(map);
+	  	
+	  	//when user clicks on the "submit" button
+	  	featureform.submit({name: "polygon"}, function (event) {
+	  		//prevent the default form behavior (which would refresh the page)
+			event.preventDefault();
+			
+			var path = polyline.getPath();
+			var wktelement = "'LINESTRING(";
+			for (var i =0; i < path.length; i++) {
+					var lat_i = path.getAt(i).lat();
+					var lng_i = path.getAt(i).lng();
+					wktelement += lng_i + " "+ lat_i + ",";
+			}
+			wktelement = wktelement.slice(0, -1);
+			wktelement += ")'";
+			//	put all data elements in a "data" object
+	 		var polylinedata = {				
+				holeNum:	$("select[name=holeNum]", this).val(),				
+				polylineType: $("select[name=polylineType]", this).val(),
+		  		polylineValue: wktelement
+			};
+			$.post("addPolylineFeature.php",polylinedata);
+ 		});
  	});
  	//adding course features via polygoncomplete
 	google.maps.event.addListener(drawingManager,'polygoncomplete',function(polygon) {
@@ -187,7 +212,7 @@ function initialize() {
 			};
 		
 			//send the results to the PHP script that adds the point to the database
-			$.post("newpolygonfeature.php",polygondata);
+			$.post("addPolygonFeature.php",polygondata);
 			return false;
 			// $.each(wktelement, function(){alert(wktelement);});
 			

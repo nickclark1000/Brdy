@@ -70,6 +70,41 @@
     		<input type="submit" class="btn btn-primary" value="Submit">
   		</div>
 	</form>
+	<!-- adding a course polygon feature via info window form -->
+	<form class="polylineform" action="addPolylineFeature.php" method="post" style="display:none">
+		<h4>Polyline Feature Details</h4>
+		<span style="margin-right:9px;">Hole #</span>
+		<select name="holeNum">
+  			<option value="1">1</option>
+  			<option value="2">2</option>
+  			<option value="3">3</option>
+  			<option value="4">4</option>
+  			<option value="5">5</option>
+  			<option value="6">6</option>
+  			<option value="7">7</option>
+  			<option value="8">8</option>
+  			<option value="9">9</option>
+  			<option value="10">10</option>
+  			<option value="11">11</option>
+  			<option value="12">12</option>
+  			<option value="13">13</option>
+  			<option value="14">14</option>
+  			<option value="15">15</option>
+  			<option value="16">16</option>
+  			<option value="17">17</option>
+  			<option value="18">18</option>
+		</select>
+		<br>
+		<span>Feature:</span>
+    	<select name="polylineType">
+  			<option value="targetline">Target line</option>
+		</select>
+		<br>
+		<div style="height:40px">
+    		<input type="hidden" name="polylineValue" id="polylineValue" value=""> 
+    		<input type="submit" class="btn btn-primary" value="Submit">
+  		</div>
+	</form>
 	<!-- adding a course point feature via info window form -->
 	<form class="pointform" action="addPointFeature.php" method="post" style="display:none">
 		<h4>Point Feature Details</h4>

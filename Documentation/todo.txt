@@ -1,10 +1,23 @@
-- cycle through each teeblock for the first tee shot
-- stats , accuracy improvements
+TO DO:
+- stats, accuracy improvements
 - search by course
+- common template for header
 - integrate round ids
 - incorporate bunkers
-- incorporate club number
-	- include as part of info window
-	- alert
-	- 
 - penalty shots (trigger another shot when user clicks in water)
+- admin console for updating daily pin positions and defining course features
+- tutorial for mapping courses
+- icons for shots and pins
+- default the clubUsed to putter when they are on the green
+- add animation for each shot
+- confirmation of hole completed
+- confirmation of hole feature added
+- edit markers - change their location
+- determine where putts are missed using heading calculation relative to straight line between the original putt location and the hole
+- plan module - view historical shot locations and where people were most successful (e.g., where birdies are made, where up and downs are most likely to occur)
+- add date range as a filter to stats module
+- add filter for displaying GIR stats by club
+- stats - graph for closed distance ranges (150-175) and table for < or > ranges (<100)
+
+COMPLETED:
+- cycle through each teeblock for the first tee shot
