@@ -40,58 +40,54 @@ $result_array[] = $row['ShotDistance'];
 }
 
 echo "
-<h3>Off The Tee - Distance</h3>
-<hr>
-<h4 style='text-align:center'>Average Driving Distances</h4>
-<div style='padding-bottom:30px'>
-	<div id='placeholder' style='width:100%; height:250px;'>
-		<script>
-			$(function () {
-				var d1 =[".$resAvgDrive1.", 2];
-				var d2 =[".$resAvgDrive2.",1];
-				var d3 =[".$resAvgDrive3.",0];
+<div id='placeholder' style='width:100%; height:250px;'>
+	<script>
+		$(function () {
+			var d1 =[".$resAvgDrive1.", 2];
+			var d2 =[".$resAvgDrive2.",1];
+			var d3 =[".$resAvgDrive3.",0];
 
-				var startData = [
-					[d1],
-					[d2],
-					[d3]
-				];
+			var startData = [
+				[d1],
+				[d2],
+				[d3]
+			];
 
-				var ticks = [
-					[0, '3 Iron'], [1, '3 Wood'], [2, 'Driver']
-				];
+			var ticks = [
+				[0, '3 Iron'], [1, '3 Wood'], [2, 'Driver']
+			];
 
-				var option = {
-					series: {
-						bars:{
-							show: true,
-							fill: true
-						}
-					},
-					bars: {
-						barWidth: 0.75,
-						horizontal:true,
-						align: 'center',
-						lineWidth: 1
-					},
-					xaxis: {
-						max: 350,
-						axisLabel: 'Yards',
-						tickColor: '#f6f6f6',
-						color:'black'
-					},
-					yaxis: {
-						ticks: ticks,
-						axisLabelPadding: 10,
-						tickColor: '#f6f6f6',
-					},
-				};
+			var option = {
+				series: {
+					bars:{
+						show: true,
+						fill: true
+					}
+				},
+				bars: {
+					barWidth: 0.75,
+					horizontal:true,
+					align: 'center',
+					lineWidth: 1
+				},
+				xaxis: {
+					max: 350,
+					axisLabel: 'Yards',
+					tickColor: '#f6f6f6',
+					color:'black'
+				},
+				yaxis: {
+					ticks: ticks,
+					axisLabelPadding: 10,
+					tickColor: '#f6f6f6',
+				},
+			};
 
-				$.plot($('#placeholder'),startData,option);
-			});
-		</script>
-	</div>
+			$.plot($('#placeholder'),startData,option);
+		});
+	</script>
 </div>
+
 <div class='col-md-8'>
 <!--	<h4>Total Drives: ".$resTotal."</h4> -->
 <table class='table table-striped' style='border-bottom:1px solid #e6e6e6'>

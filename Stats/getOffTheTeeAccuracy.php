@@ -25,8 +25,6 @@
 
 
 	echo "
-	<h3>Off The Tee - Accuracy</h3>
-	<hr>
 	<h4>Tee Shots: ".$resTotHoles."</h4>
 	<h4>Fairways Hit: ".$resTotFairway."</h4>
 	<h4>Driving Accuracy: ".round($resTotFairway/$resTotHoles*100,2)."%</h4>

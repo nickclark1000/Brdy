@@ -10,6 +10,8 @@
 		<link href="../Common/bootstrap/css/bootstrap-theme.css" rel="stylesheet">
 		<link href="css/play.css" rel="stylesheet">
 		<link href="../Common/bootstrap/css/bootstrap-typeahead.css" rel="stylesheet">
+		<link href="../Common/css/alertify.core.css" rel="stylesheet">
+		<link href="../Common/css/alertify.default.css" rel="stylesheet">
 		<style>
 			body {
 				padding-top: 50px; /* 60px to make the container go all the way to the bottom of the topbar */
@@ -79,6 +81,7 @@
 		<script type="text/javascript" src="../Common/js/wicket.js"> </script>
 		<script type="text/javascript" src="../Common/js/accordion.js"> </script>
 		<script type="text/javascript" src="js/infobox.js"></script>
+		<script type="text/javascript" src="../Common/js/alertify.js"></script>
 		<script type="text/javascript" src="js/addRound_gmap.js"></script>
 		<script type="text/javascript" src="../Common/bootstrap/js/bootstrap.min.js"></script>
 		<script type="text/javascript" src="../Common/js/typeahead.js"></script>

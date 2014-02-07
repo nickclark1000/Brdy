@@ -61,8 +61,7 @@
 					<div class="collapse" id="approachthegreen">
 						<ul>
 							<li><a id="approachGreenInReg" href="#">Greens in Regulation</a></li>
-							<li><a href="#">Accuracy from Fairway</a></li>
-							<li><a href="#">Accuracy from Rough</a></li>
+							<li><a id="select-approach-accuracy" href="#">Accuracy</a></li>
 							<li><a href="#">Scoring</a></li>
 							<li><a href="#">Going for It</a></li>
 							<li><a href="#">Hole Outs</a></li>
@@ -109,17 +108,37 @@
 		</div>
 		<div class="col-md-10" style="height:100%; border-left: 5px solid #e6e6e6">
 			<div id="reportBody">
+				<div id="tee-distance" style="display:none">
+					<h3>OFF THE TEE</h3>
+					<h4 style="color:#999999">DISTANCE</h4>
+					<hr>
+					<h4 style='text-align:center'>Average Driving Distances</h4>
+					<div id="tee-distance-data" style="padding-bottom:30px"></div>
+				</div>
+				<div id="tee-accuracy" style="display:none">
+					<h3>OFF THE TEE</h3>
+					<h4 style="color:#999999">ACCURACY</h4>
+					<hr>
+					<div id="tee-accuracy-data"></div>
+				</div>
 				<div id="approach-the-green" style="display:none">
 					<h3>APPROACH THE GREEN</h3>
 					<h4 style='color:#999999'>GREENS IN REGULATION</h4>
 					<hr>
 					<span>Display: <select id="filter1"><option value="1">Distance Ranges</option><option value='2'>Clubs</option></select></span>
-					<span>Shots from: <select id="filter2" autocomplete="off" onchange="shotFromChange()"><option value="1" selected="selected">All shots</option><option value='fairway'>Fairway</option><option value='rough'>Rough</option><option value='fairwaybunker'>Fairway bunker</option><option value='teemarker'>Off the tee</option></select></span>
+					<span>Shots from: <select id="filter2" autocomplete="off" onchange="GIRshotFromChange()"><option value="1" selected="selected">All shots</option><option value='fairway'>Fairway</option><option value='rough'>Rough</option><option value='fairwaybunker'>Fairway bunker</option><option value='teemarker'>Off the tee</option></select></span>
 					<div id="approach-the-green-data"></div>
 				</div> 
+				<div id="approach-accuracy" style="display:none">
+					<h3>APPROACH THE GREEN</h3>
+					<h4 style='color:#999999'>ACCURACY</h4>
+					<hr>
+					<span>Display: <select id="accuracy-filter1"><option value="1">Distance Ranges</option><option value='2'>Clubs</option></select></span>
+					<span>Shots from: <select id="accuracy-filter2" autocomplete="off" onchange="accuracyShotFromChange()"><option value="1" selected="selected">All shots</option><option value='fairway'>Fairway</option><option value='rough'>Rough</option><option value='fairwaybunker'>Fairway bunker</option><option value='teemarker'>Off the tee</option></select></span>
+					<div id="approach-accuracy-data"></div>
+				</div> 
 			</div>
-			
-		</div>
+	 	</div>
 	 </div>
 
 

@@ -73,6 +73,7 @@ function initialize() {
 		thisHole["shots"] = [];
 		holes.push(thisHole);
 	}
+	
 	holePin.setMap(map);
 	activeHole = 1;
 	par = getHoleFeatures(activeHole,'par');
@@ -103,15 +104,18 @@ function addLatLng(event) {
 		path.push(event.latLng);
 		holes[arrayHole].numShots = path.getLength();
 		numShots = holes[arrayHole].numShots;
-//		holeTeeblock = getHoleFeatures(activeHole,'teeblock');
+		
+		// get hole features
 		teeblockArray = getHoleFeatures(activeHole,'teeblock');
-		console.log(teeblockArray[0]);
 		holeFairway = getHoleFeatures(activeHole,'fairway');
 		holeGreen = getHoleFeatures(activeHole,'green');
 		holeFairwayBunkers = getHoleFeatures(activeHole,'fairwaybunker');
+		pinLocation = holePin.position;
+/*		
 		if (numShots != 0) {
 			google.maps.event.addListener(map,'mousemove',distanceToPin);
 		}
+*/
 		//Make sure tee block is clicked in first
 		for (i=0;i<teeblockArray.length;i++) {
 			j = i+1;
@@ -125,151 +129,77 @@ function addLatLng(event) {
 				return false;
 			}	
 		}
-		// Add a new marker at the new plotted point on the polyline.
+		// Add a new marker at the new plotted point on the polyline and then add to the markers array
 		var marker = new google.maps.Marker({
 			position: event.latLng,
 			title: 'Shot ' + path.getLength(),
 			map: map,
-			shotnum: path.getLength()
+			icon: '../Common/img/'+numShots+'greenMarker.png'
 		});
-
-		if (par != 3) {
-			//Check if fairway is hit in regulation
-			if (numShots == 2 && google.maps.geometry.poly.containsLocation(event.latLng, holeFairway)==false) {
-				document.getElementsByClassName("holeFairwayHit")[activeHole-1].innerHTML = "No";
-				thisShot["shotFrom"] = 'rough';
-				shots[0]["shotTo"] = 'rough';
-			} else if (numShots == 2 && google.maps.geometry.poly.containsLocation(event.latLng, holeFairway)==true) {
-				document.getElementsByClassName("holeFairwayHit")[activeHole-1].innerHTML = "Yes";
-				thisShot["shotFrom"] = 'fairway';
-				shots[0]["shotTo"] = 'fairway';
-			}
-		}
-		if (par == 5 && numShots == 3 && google.maps.geometry.poly.containsLocation(event.latLng, holeGreen)==true) {
-			thisShot["shotFrom"] = 'green';
-			document.getElementsByClassName("holeGreenHit")[activeHole-1].innerHTML = "Yes";
-			greenHit = true;
-			shotsToGreen = 2;
-		} else if (par == 5 && numShots == 3 && google.maps.geometry.poly.containsLocation(event.latLng, holeFairway)==true) {
-			thisShot["shotFrom"] = 'fairway';
-			shots[1]["shotTo"] = 'fairway';
-		} else if (par == 5 && numShots == 3 && google.maps.geometry.poly.containsLocation(event.latLng, holeFairway)==false) {
-			thisShot["shotFrom"] = 'rough';
-			shots[1]["shotTo"] = 'rough';
-		}
-		//Check if green is hit in regulation
-		if (numShots == par-1 && google.maps.geometry.poly.containsLocation(event.latLng, holeGreen)==false) {
-			document.getElementsByClassName("holeGreenHit")[activeHole-1].innerHTML = "No";
-			if (google.maps.geometry.poly.containsLocation(event.latLng, holeFairway)==false) {
-				thisShot["shotFrom"] = 'rough';
-				shots[numShots-2]["shotTo"] = 'rough';
-			} else {
-				thisShot["shotFrom"] = 'fairway';
-				shots[numShots-2]["shotTo"] = 'fairway';
-			}
-		} else if (numShots == par-1 && google.maps.geometry.poly.containsLocation(event.latLng, holeGreen)==true) {
-			document.getElementsByClassName("holeGreenHit")[activeHole-1].innerHTML = "Yes";
-			greenHit = true;
-			shotsToGreen = par-2;
-			thisShot["shotFrom"] = 'green';
-			shots[numShots-2]["shotTo"] = 'green';
-		}
-		if (greenHit == false && numShots > par-1 && google.maps.geometry.poly.containsLocation(event.latLng, holeGreen)==false) {
-			if (google.maps.geometry.poly.containsLocation(event.latLng, holeFairway)==false) {
-				thisShot["shotFrom"] = 'rough';
-				shots[numShots-2]["shotTo"] = 'rough';
-			} else {
-				thisShot["shotFrom"] = 'fairway';
-				shots[numShots-2]["shotTo"] = 'fairway';
-			}
-		} else if (greenHit == false && numShots > par-1 && google.maps.geometry.poly.containsLocation(event.latLng, holeGreen)==true) {
-			greenHit = true;
-			shotsToGreen = numShots - 1;
-			thisShot["shotFrom"] = 'green';
-			shots[numShots-2]["shotTo"] = 'green';
-		}
-		if (greenHit == true) {
-			numPutts = numPutts + 1;
-			document.getElementsByClassName("holePutts")[activeHole-1].innerHTML = numPutts;
-			thisShot["shotFrom"] = 'green';
-			shots[numShots-2]["shotTo"] = 'green';
-		}
-		document.getElementsByClassName("holeScore")[activeHole-1].innerHTML = numShots;
-		//Add marker to the array
 		markers.push(marker);
-		pinLocation = holePin.position;
+		
 		thisShot["shotNum"] = path.getLength();
-		shotNum = thisShot["shotNum"];
-		//Calculate the distance to the pin
-		shotDistToPin = google.maps.geometry.spherical.computeDistanceBetween(marker.position,pinLocation);
-		//Convert from meters to yards and round
-		shotDistToPin = Math.round(shotDistToPin * 1.09361);
-		thisShot["shotDistToPin"] = shotDistToPin;
+		thisShot["shotDistToPin"] = getDistanceInYards(marker.position,pinLocation);
+		
+		if (numShots > 1) {
+			var shotFrom = getShotLocationDescription(event.latLng).shotFrom;
+			var prevShotNum = numShots - 2;
+			
+			thisShot["shotFrom"] = shotFrom;
+			thisShot["shotFromDescription"] = getShotLocationDescription(event.latLng).shotFromDescription;
+			
+			shots[prevShotNum]["shotTo"] = shotFrom;
+			shots[prevShotNum]["shotDist"] = getDistanceInYards(marker.position,markers[prevShotNum].position);
+			shots[prevShotNum]["proximityAfterShot"] = thisShot.shotDistToPin;
+		}
+		
+		if (par != 3 && numShots == 2 && shotFrom === 'fairway') {
+			alertify.success("You hit the fairway - Nice!");
+		}
+		
+		if (numShots == par-1 && shotFrom === 'green') {
+			alertify.success("Green in regulation - keep it up!");
+		}
+	
 		//calculate green edge distances (between shot location and edge of green; between edge of green and pin)
-		if (greenHit == false) {
+		if (shotFrom != 'green') {
 			for (i=1; i<1000; i++) {
 				intersectPt = google.maps.geometry.spherical.interpolate(marker.position, pinLocation, i/1000);
 				if (google.maps.geometry.poly.containsLocation(intersectPt, holeGreen)==true) {
 					break;
 				}
 			}
-			thisShot["percGreenAvailability"] = roundToTwo((google.maps.geometry.spherical.computeDistanceBetween(intersectPt, pinLocation)*1.09361) / shotDistToPin * 100);
+			thisShot["percGreenAvailability"] = getDistanceInYards(intersectPt, pinLocation) / thisShot.shotDistToPin * 100;
 		}
+		
 		//Add the marker position in WKT format
 		var markerLat = marker.getPosition().lat();
 		var markerLon = marker.getPosition().lng();       		      			
 		var wktelement = "\'POINT(" + markerLon + " " + markerLat + ")\'";
 		thisShot["position"] = wktelement;
-		// Calculate the shot distance
-		if(numShots >= 2) {
-			prevShotDist = google.maps.geometry.spherical.computeDistanceBetween(marker.position,prevMarkerPosition);
-			prevShotDist = Math.round(prevShotDist * 1.09361);
-			prevShotNum = numShots - 2;
-			shots[prevShotNum].shotDist = prevShotDist;
-		}
-		//update the prevMarkerPosition
-		prevMarkerPosition = marker.position;
-		//add thisShot to the shots array
+
 		shots.push(thisShot);
-		console.log(thisShot);	  
-		//define infowindow
-		var infowindow = new google.maps.InfoWindow({
-			content: marker.title,
-			position: marker.position
-		});
-		//show infowindow upon creation
-		infowindow.open(map,marker);
-		//Show info window when you click on a marker
-		google.maps.event.addListener(marker, 'click', function() {
-			var infowindow = new google.maps.InfoWindow({
-				content: marker.title
-			});
-			shotNum = marker.shotnum;
-			//addShotDetails(this.shotnum);
-			infowindow.open(map,this);
-		});
-		addShotCard(marker.shotnum);
+		addShotCard(thisShot.shotNum);
 	}
 }
 
 function lastShotClick() {
-	//define the target line for the active hole
-	holeTarget = getHoleFeatures(activeHole,'targetline');
-	//mark the active hole as done
 	holes[activeHole-1].doneHole = true;
+	
 	shots[numShots-1].shotTo = 'hole';
+	shots[numShots-1].proximityAfterShot = 0;
+	
 	//get the lat and lng for the holePin for the purpose of adding to the path array
 	var wkt = new Wkt.Wkt();
 	wkt.fromObject(holePin);
 	var pinLatLng = new google.maps.LatLng(wkt.components[0].y, wkt.components[0].x);
 	path.push(pinLatLng);
-	// subtract 2 from the length to accommodate the counting from 0 and identifying the last shot marker
-	y = path.getLength() - 2;
-	x = markers[y];
+
 	//calculate the shot distance between the last shot location and the pin location
-	z = google.maps.geometry.spherical.computeDistanceBetween(x.position,pinLocation);
-	//convert to yards
-	shots[y].shotDist = z * 1.09361;
+	shots[numShots-1]["shotDist"] = getDistanceInYards(markers[numShots-1].position,pinLocation);
+	
+	//define the target line for the active hole
+	holeTarget = getHoleFeatures(activeHole,'targetline');
 	//heading calculation of tee shot
 	shotHeading = google.maps.geometry.spherical.computeHeading(markers[0].position,markers[1].position);
 	//heading calculation of best target pt
@@ -302,7 +232,7 @@ function lastShotClick() {
 	cornerPt = google.maps.geometry.spherical.computeOffset(markers[0].position, adjDistance, targetHeading);
 	//find distance between cornerPt/middle of fairway and 2nd shot location. Make sure to convert to yards. Assign to first shot. 
 	ydsOffFairwayCenter = google.maps.geometry.spherical.computeDistanceBetween(cornerPt, markers[1].position) * 1.09361;
-	shots[0]["ydsOffFairwayCenter"] = ydsOffFairwayCenter;
+	shots[0]["ydsOffFairwayCenter"] = roundToTwo(ydsOffFairwayCenter);
 	//if fairway was missed, use Google interpolate and containsLocation methods to find approximate location of the edge of fairway
 	if (shots[1]["shotFrom"] !== 'fairway') {
 		for (i=1; i<1000; i++) {
@@ -313,12 +243,12 @@ function lastShotClick() {
 		}	
 		//calculate distance beween the edge of fairway and 2nd shot location. Make sure to convert to yards.
 		ydsOffFairway = google.maps.geometry.spherical.computeDistanceBetween(intersectPt, markers[1].position) * 1.09361;
-		shots[0]["ydsOffFairway"] = ydsOffFairway;
+		shots[0]["ydsOffFairway"] = roundToTwo(ydsOffFairway);
 	}
-	google.maps.event.clearListeners(map,'mousemove');
-	ib.close(map);
+//	google.maps.event.clearListeners(map,'mousemove');
+//	ib.close(map);
 	//send the results to the PHP script that adds the point to the database
-	$.post("addShots.php", {shots: shots}, function(data){alert('data loaded:' + data );});
+	$.post("addShots.php", {shots: shots}, function(data){alertify.success("Hole Complete!");});
 }
 
 //Update the activeHole when the user switches holes via the carousel
@@ -435,6 +365,9 @@ function getHoleFeatures(holeNum,feature){
 		pinVal = features[holeNum-1].pinlocation[0];
 		pinoutput = pinWkt.read(pinVal);
 		holePin = pinWkt.toObject();
+		holePin.setOptions({
+                icon: '../Common/img/pin.png'
+            });
 		return holePin;
 	}
 	if(feature=='teeblock') {
@@ -483,6 +416,28 @@ function getHoleFeatures(holeNum,feature){
 	if(feature=='par') {
 		par = features[holeNum-1].par;
 		return par;
+	}
+}
+
+function getShotLocationDescription(latLng) {
+	if (google.maps.geometry.poly.containsLocation(latLng, holeFairway)==true) {
+		details = {'shotFrom':'fairway', 'shotFromDescription':'fairway'};
+		return details;
+	} else if (google.maps.geometry.poly.containsLocation(latLng, holeGreen)==true) {
+		details = {'shotFrom':'green', 'shotFromDescription':'green'};
+		return details;
+	} else {
+		//check if shot hit from any of the fairway bunkers
+		for (i=0;i<fairwaybunkerArray.length;i++) {
+			j = i+1;
+			if (google.maps.geometry.poly.containsLocation(latLng, fairwaybunkerArray[i])==true) {
+				details = {'shotFrom':'fairwaybunker', 'shotFromDescription':'fairwaybunker' + j};
+				return details;
+			}
+		}
+		//otherwise shot hit from rough
+		details = {'shotFrom':'rough', 'shotFromDescription':'rough'};
+		return details;
 	}
 }
 
@@ -575,17 +530,22 @@ function addShotDetails(shotNumber) {
 function addShotCard(shotNumber,clubUsed) {
 	$("#noShots").hide();
 	var shot = shots[shotNumber-1];
-	$("#shotBar").append("<span class='shotInfo thumbnail'><h4>Shot " + shotNumber + "</h4><hr><span>Club used: <select class='clubUsed'>" + clubs.data + "</select></span><div>Distance to pin: " + shot.shotDistToPin + "yds</div></span>");
+	$("#shotBar").append("<span class='shotInfo thumbnail'><h4>Shot " + shotNumber + "</h4><hr><span>Club used: <select class='clubUsed'>" + clubs.data + "</select></span><div>Distance to pin: " + shot.shotDistToPin + "yds</div><div>Shot from: " + shot.shotFrom + "</div></span>");
 	if(typeof clubUsed != 'undefined'){
 		$(".clubUsed").eq(shotNumber-1).val(clubUsed);
 	}
 	$("#shotBar").animate({scrollLeft: 10000},800);
 	$(".clubUsed").eq(shotNumber-1).change(function(){
-		shots[shotNumber-1].clubUsed = $(".clubUsed").eq(shotNumber-1).val();
+		shot.clubUsed = $(".clubUsed").eq(shotNumber-1).val();
 	});
 }
+
 function roundToTwo(num) {    
     return +(Math.round(num + "e+2")  + "e-2");
+}
+
+function getDistanceInYards(latLng1,latLng2) {
+	return roundToTwo(google.maps.geometry.spherical.computeDistanceBetween(latLng1,latLng2) * 1.09361);
 }
 
 google.maps.event.addDomListener(window,'load',initialize);

@@ -20,8 +20,9 @@
 		$ShotDistance = $value['shotDist'];
 		$ClubNum = $value['clubUsed'];
 		$ShotTo = $value['shotTo'];
+		$ProximityAfterShot = $value['proximityAfterShot'];
 
-		mysql_query("INSERT INTO Shots (`RoundId`, `HoleNum`, `ShotNum`,`ShotFrom`,`DistanceToHole`, `ShotDistance`, `ClubNum`, `ShotPosition`, `DirOffTarget`,`YdsOffFairwayCenter`,`YdsOffFairway`,`PercGreenAvailability`,`ShotFromDescription`,`ShotTo`) VALUES ('$RoundId', '$HoleNum', '$ShotNum', '$ShotFrom', '$DistanceToHole', '$ShotDistance', '$ClubNum', GeomFromText({$ShotPosition}),'$DirOffTarget', '$YdsOffFairwayCenter','$YdsOffFairway','$PercGreenAvailability','$ShotFromDescription','$ShotTo')") or die(mysql_error()); 
+		mysql_query("INSERT INTO Shots (`RoundId`, `HoleNum`, `ShotNum`,`ShotFrom`,`DistanceToHole`, `ShotDistance`, `ClubNum`, `ShotPosition`, `DirOffTarget`,`YdsOffFairwayCenter`,`YdsOffFairway`,`PercGreenAvailability`,`ShotFromDescription`,`ShotTo`,`ProximityAfterShot`) VALUES ('$RoundId', '$HoleNum', '$ShotNum', '$ShotFrom', '$DistanceToHole', '$ShotDistance', '$ClubNum', GeomFromText({$ShotPosition}),'$DirOffTarget', '$YdsOffFairwayCenter','$YdsOffFairway','$PercGreenAvailability','$ShotFromDescription','$ShotTo','$ProximityAfterShot')") or die(mysql_error()); 
 	}
   
 	//close your connections

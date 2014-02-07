@@ -1,5 +1,4 @@
 TO DO:
-- stats, accuracy improvements
 - search by course
 - common template for header
 - integrate round ids
@@ -18,6 +17,8 @@ TO DO:
 - add date range as a filter to stats module
 - add filter for displaying GIR stats by club
 - stats - graph for closed distance ranges (150-175) and table for < or > ranges (<100)
+- move containsLocation and Distance functions to server side
 
 COMPLETED:
 - cycle through each teeblock for the first tee shot
+- add ProximityAfterShot parameter to each shot object
