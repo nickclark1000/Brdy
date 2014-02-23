@@ -169,15 +169,26 @@ function initialize() {
  	});
  	//adding course features via polygoncomplete
 	google.maps.event.addListener(drawingManager,'polygoncomplete',function(polygon) {
+		//need to get a lat/lon pair to set where to display the info window
+	  	var polylength = polygon.getPath().getArray().length;
+	    var lastarray = polygon.getPath().getAt(polylength-1);
+	    
+		var bounds = new google.maps.LatLngBounds();
+		for (var i = 0; i<polylength; i++) {
+		   bounds.extend(new google.maps.LatLng(polygon.getPath().getAt(i).lat(), polygon.getPath().getAt(i).lng()));
+		}
+		var center = bounds.getCenter();
+		var centerMarker = new google.maps.Marker({
+			position: center,
+			map: map
+		});
+		console.log(center);
 	  	var featureform = $(".polygonform").clone().show();
 	  	var infowindowfeaturecontent = featureform[0];
 	  	var infofeaturewindow = new google.maps.InfoWindow({
 			content: infowindowfeaturecontent
 	  	});
-	  	
-	  	//need to get a lat/lon pair to set where to display the info window
-	  	var polylength=polygon.getPath().getArray().length;
-	    var lastarray=polygon.getPath().getAt(polylength-1);	
+	  		
 	  	infofeaturewindow.setPosition(lastarray);
 	  		
 	  	infofeaturewindow.open(map);
@@ -221,6 +232,32 @@ function initialize() {
       			
   	   }); 
   });    	
+}
+
+var clientId = 'NIY1H3QPT43DVZJ2FG2EK5YFRMILD1OSZMHWAGHX4RNJ4H3T';
+var clientSecret = 'OG12GDFTJJT3IXNQOG431LR0IFIFJGMYTVD0LWT3Y3EN5MET';
+var query = 'golf';
+
+navigator.geolocation.getCurrentPosition(show_map);
+
+latitude = '';
+longitude = '';
+
+function show_map(position) {
+  latitude = position.coords.latitude;
+  longitude = position.coords.longitude;
+  console.log(latitude + ',' + longitude);
+  // let's show a map or do something interesting!
+  getFoursquareData();
+}
+function getFoursquareData() {
+$.getJSON('https://api.foursquare.com/v2/venues/search?categoryId=4bf58dd8d48988d1e6941735&near=Moncton,NB&query=' + query + '&client_id=' + clientId + '&client_secret=' + clientSecret + '&v=20130209',
+    function(data) {
+        $.each(data.response.venues, function(i,venues){
+            content = '<p>' + venues.name + '</p>';
+            $(content).appendTo("#names");
+       });
+});
 }
 
 google.maps.event.addDomListener(window,'load',initialize);

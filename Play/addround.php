@@ -25,28 +25,9 @@
 		<script type="text/javascript" src="https://www.google.com/jsapi"></script>                       
 	</head>
 	<body>
-    	<!-- Fixed navbar -->
-		<div class="navbar navbar-default navbar-fixed-top" role="navigation">
-		  <div class="container">
-			<div class="navbar-header">
-			  <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-				<span class="sr-only">Toggle navigation</span>
-				<span class="icon-bar"></span>
-				<span class="icon-bar"></span>
-				<span class="icon-bar"></span>
-			  </button>
-			  <a class="navbar-brand" href="../landingpage.html">Brdy</a>
-			</div>
-			<div class="navbar-collapse collapse">
-			  <ul class="nav navbar-nav">
-				<li ><a href="../Play/addround.php">Play</a></li>
-			  </ul>
-			  <ul class="nav navbar-nav">
-				<li ><a href="../Stats/stats.php">Stats</a></li>
-			  </ul>
-			</div><!--/.nav-collapse -->
-		  </div>
-		</div>
+    	<!-- include header template -->
+		<?php include("../Common/header.php"); ?>
+		
 		<div style="height:100%">
 			<div id="map_canvas"></div>
 			<div id="shotBar">
@@ -54,16 +35,16 @@
 					<h3>No Shots Yet</h3>
 				</div>
 			</div>
-			<!--
+		<!--	
 			<div class="row" style="position: absolute; top:70px; left:40px; max-width:400px; width:90%; padding-right:10px;">
 				<div class="input-group">
 				  <input type="text" class="twitter-typeahead form-control" style="width:100%; box-shadow:0 2px 6px rgba(0,0,0,0.3),0 4px 15px -5px rgba(0,0,0,0.0);">
 				  <span class="input-group-btn" style="box-shadow:0 2px 6px rgba(0,0,0,0.3),0 4px 15px -5px rgba(0,0,0,0.0);">
-					<button class="btn btn-default" type="button" >Search</button>
+					<button class="btn btn-default" type="button" >Searchd</button>
 				  </span>
 				</div>
-			</div>-->
-			
+			</div>
+		-->	
 			<div class="panel" style="width:320px;height:90px;border:#999999 1px solid; background-color: #ffffff; position:absolute; top:90px; left:30px">
 				<div id="myCarousel" class="carousel slide" data-ride="carousel">
       				<div class="carousel-inner" style="text-align:center"></div>
@@ -80,6 +61,7 @@
 		<script type="text/javascript" src="../Common/js/wicket.src.js"> </script>
 		<script type="text/javascript" src="../Common/js/wicket.js"> </script>
 		<script type="text/javascript" src="../Common/js/accordion.js"> </script>
+		<script type="text/javascript" src="../Common/js/purl.js"> </script>
 		<script type="text/javascript" src="js/infobox.js"></script>
 		<script type="text/javascript" src="../Common/js/alertify.js"></script>
 		<script type="text/javascript" src="js/addRound_gmap.js"></script>

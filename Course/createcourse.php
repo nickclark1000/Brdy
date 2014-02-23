@@ -157,28 +157,9 @@
 	</form>
 	
 	<body>
-		<!-- Fixed navbar -->
-		<div class="navbar navbar-default navbar-fixed-top" role="navigation">
-			<div class="container">
-				<div class="navbar-header">
-					<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-						<span class="sr-only">Toggle navigation</span>
-						<span class="icon-bar"></span>
-						<span class="icon-bar"></span>
-						<span class="icon-bar"></span>
-					</button>
-					<a class="navbar-brand" href="../landingpage.html">Brdy</a>
-				</div>
-				<div class="navbar-collapse collapse">
-					<ul class="nav navbar-nav">
-						<li ><a href="../Play/addround.php">Play</a></li>
-					</ul>
-					<ul class="nav navbar-nav">
-						<li ><a href="../Stats/stats.php">Stats</a></li>
-					</ul>
-				</div><!--/.nav-collapse -->
-			</div>
-		</div>
+		<!-- include header template -->
+		<?php include("../Common/header.php"); ?>
+		
 		<div style="height:100%">  	
 			<div class="col-md-3 scrollable" style="height:100%">
 				<h3>Create Course</h3>
@@ -227,7 +208,8 @@
 						</tr>
 					</thead>
 					<tbody id="holeAttributes"></tbody>
-				</table>      	
+				</table>
+				<div id="names"></div>     	
 			</div>  		
 			<div class="col-md-9" id="map_canvas" style="height:700px"></div>
 		</div> 

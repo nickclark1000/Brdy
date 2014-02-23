@@ -2,7 +2,8 @@
 
 	include '../Common/admininfo.php';
 	$conn = mysql_connect($dbhost,$username,$password);
-
+	$courseId = $_POST['courseId'];
+	
 	$holeFeatures = array();
 	for ($i = 1; $i<=18; $i++) {
 		$thisHole = new stdClass();
@@ -14,8 +15,8 @@
 		$thisHole->pinlocation = array();
 		$thisHole->targetline = array();
 		$thisHole->par = array();
-		$query = mysql_query("SELECT FeatureType, AsText(FeatureValue) FROM `HoleInfo` where HoleNum='$i'");
-		$queryPar = mysql_query("SELECT Par FROM `Holes` where HoleNum='$i'");
+		$query = mysql_query("SELECT FeatureType, AsText(FeatureValue) FROM `HoleInfo` where HoleNum='$i' and CourseId='$courseId'");
+		$queryPar = mysql_query("SELECT Par FROM `Holes` where HoleNum='$i' and CourseId='$courseId'");
 		while($row = mysql_fetch_array($query)){
 			if ($row['FeatureType'] == 'fairway') {
 				array_push($thisHole->fairway = $row['AsText(FeatureValue)']);

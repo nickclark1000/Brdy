@@ -26,16 +26,19 @@ for(i=2;i<19;i++){
 
 //load the features for every hole on page load
 var holeFeatures = [];
+var url = $.url();
+var courseId = url.param('crs');
+var roundId = url.param('rnd');
+
 $.ajax({
-	type: "GET",
+	type: "POST",
 	url: "getHoleFeatures.php",
-	data: {'data': holeFeatures},                        
+	data: {'courseId': courseId},                        
 	success: function(holeFeatures){                    
 		features = JSON.parse(holeFeatures);
 		holePin = getHoleFeatures(1,'pinlocation');
 	}
 });
-
 
 $.post("getUserClubs.php", {id:userId},function(data){
 	clubs["data"] = data;
@@ -248,7 +251,7 @@ function lastShotClick() {
 //	google.maps.event.clearListeners(map,'mousemove');
 //	ib.close(map);
 	//send the results to the PHP script that adds the point to the database
-	$.post("addShots.php", {shots: shots}, function(data){alertify.success("Hole Complete!");});
+	$.post("addShots.php", {shots: shots, roundId: roundId}, function(data){alertify.success("Hole Complete!");});
 }
 
 //Update the activeHole when the user switches holes via the carousel

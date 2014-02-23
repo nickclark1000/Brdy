@@ -8,7 +8,7 @@
 	$encryptpass = hash('sha256', $password);
 	//encrypt password
 	
-	$sql="SELECT Email,Password FROM RegisteredUsers WHERE Email='$email'";
+	$sql="SELECT Email,Password FROM Users WHERE Email='$email'";
 	$result=mysql_query($sql);
 	$row = mysql_fetch_array($result);
 	

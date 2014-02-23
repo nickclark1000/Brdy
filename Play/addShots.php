@@ -4,9 +4,9 @@
 	$conn = mysql_connect($dbhost,$username,$password);
 
 	$data = $_POST["shots"];
+	$RoundId = $_POST["roundId"];
 	
 	foreach ($data as $value) {
-		$RoundId = 1;
 		$HoleNum = $value['holeNum'];
 		$PercGreenAvailability = $value['percGreenAvailability'];
 		$DirOffTarget = $value['dirOffTarget'];

@@ -1,5 +1,3 @@
-$(document).ready(function () {
-
 $("#registeruser").click(function() {
 	var userfirstname = $("#firstname").val();
 	var userlastname = $("#lastname").val();
@@ -14,4 +12,10 @@ $("#registeruser").click(function() {
 	$.post("../register.php", registrationData)
 });
 
+$("#loginBtn").click(function() {
+	var email = $("#loginEmail").val();
+	var password = $("#loginPassword").val();
+
+	$.post("../register.php", {loginEmail: email, loginPassword: password})
 });
+

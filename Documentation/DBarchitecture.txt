@@ -21,7 +21,7 @@ RoundId, UserId, CourseId, FairwaysHit, IsDeleted
 ===================================
 Courses
 
-CourseId, CourseName, CourseLocation
+CourseId, CourseName, CourseLocation, NumHoles, 
 
 ===================================
 Holes
