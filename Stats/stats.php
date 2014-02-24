@@ -1,3 +1,13 @@
+<?php
+
+session_start();
+
+if (!isset($_SESSION['userId'])) {
+	header('location: http://localhost:8888/Common/index.php?failed=1');
+	exit();
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
   <head>

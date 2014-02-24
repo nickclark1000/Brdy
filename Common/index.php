@@ -56,7 +56,7 @@
 	 <div class="pull-right">
     	<h1>Welcome to Brdy.</h1>
     </div>
-    <div style="margin-left:130px; margin-top:150px; opacity:0.7; max-width:330px; background-color:#ffffff; padding:15px">
+    <div style="margin-left:130px; margin-top:150px; max-width:330px; background-color:#ffffff; padding:15px">
   		<form role="form" action="login.php" method="post">
             <div class="form-group">
               <input type="text" id="loginEmail" name="loginEmail" placeholder="Email" class="form-control">

@@ -1,40 +1,39 @@
 <?php
 
 include '../Common/admininfo.php';
-$conn = mysql_connect($dbhost,$username,$password);
 
 //	will need to post the user id and return the appropriate data
 //	$string = $_GET['datastring'];			  
 //	$holenum = $_POST['dataString'];
-$avgDrive = mysql_query("SELECT avg(ShotDistance) FROM Shots where ShotNum=1");
-$resAvgDrive = mysql_result($avgDrive, 0);
-$avgDrive1 = mysql_query("SELECT avg(ShotDistance) FROM Shots where ClubNum=1 and ShotNum=1");
-$resAvgDrive1 = mysql_result($avgDrive1, 0);
-$avgDrive2 = mysql_query("SELECT avg(ShotDistance) FROM Shots where ClubNum=2 and ShotNum=1");
-$resAvgDrive2 = mysql_result($avgDrive2, 0);
-$avgDrive3 = mysql_query("SELECT avg(ShotDistance) FROM Shots where ClubNum=3 and ShotNum=1");
-$resAvgDrive3 = mysql_result($avgDrive3, 0);
-$totalDrives = mysql_query("SELECT Count(*) FROM Shots where ShotNum=1");
-$resTotal = mysql_result($totalDrives, 0); 
-$_320plus = mysql_query("SELECT Count(*) FROM Shots where ShotNum=1 and ShotDistance>=320");
-$res320plus = mysql_result($_320plus, 0); 
-$_300320 = mysql_query("SELECT Count(*) FROM Shots where ShotNum=1 and ShotDistance<=320 and ShotDistance>=300");
-$res300320 = mysql_result($_300320, 0);
-/*	$_300plus = mysql_query("SELECT Count(*) FROM Shots where ClubNum=1 and ShotDistance>=300");
-$res300plus = mysql_result($_300plus, 0); */
-$_280300 = mysql_query("SELECT Count(*) FROM Shots where ShotNum=1 and ShotDistance<=300 and ShotDistance>=280");
-$res280300 = mysql_result($_280300, 0);
-$_260280 = mysql_query("SELECT Count(*) FROM Shots where ShotNum=1 and ShotDistance<=280 and ShotDistance>=260");
-$res260280 = mysql_result($_260280, 0);
-$_240260 = mysql_query("SELECT Count(*) FROM Shots where ShotNum=1 and ShotDistance<=260 and ShotDistance>=240");
-$res240260 = mysql_result($_240260, 0);
-$less240 = mysql_query("SELECT Count(*) FROM Shots where ShotNum=1 and ShotDistance<=240");
-$resless240 = mysql_result($less240, 0);
-$top5drives = mysql_query("select ShotDistance from Shots order by ShotDistance DESC limit 5");
+$avgDrive = mysqli_query($conn, "SELECT avg(ShotDistance) FROM Shots where ShotNum=1") or die(mysqli_error());
+$resAvgDrive = mysqli_fetch_array($avgDrive)[0];
+$avgDrive1 = mysqli_query($conn, "SELECT avg(ShotDistance) FROM Shots where ClubNum=1 and ShotNum=1") or die(mysqli_error());
+$resAvgDrive1 = mysqli_fetch_array($avgDrive1)[0];
+$avgDrive2 = mysqli_query($conn, "SELECT avg(ShotDistance) FROM Shots where ClubNum=2 and ShotNum=1") or die(mysqli_error());
+$resAvgDrive2 = mysqli_fetch_array($avgDrive2)[0];
+$avgDrive3 = mysqli_query($conn, "SELECT avg(ShotDistance) FROM Shots where ClubNum=3 and ShotNum=1") or die(mysqli_error());
+$resAvgDrive3 = mysqli_fetch_array($avgDrive3)[0];
+$totalDrives = mysqli_query($conn, "SELECT Count(*) FROM Shots where ShotNum=1") or die(mysqli_error());
+$resTotal = mysqli_fetch_array($totalDrives)[0]; 
+$_320plus = mysqli_query($conn, "SELECT Count(*) FROM Shots where ShotNum=1 and ShotDistance>=320") or die(mysqli_error());
+$res320plus = mysqli_fetch_array($_320plus)[0]; 
+$_300320 = mysqli_query($conn, "SELECT Count(*) FROM Shots where ShotNum=1 and ShotDistance<=320 and ShotDistance>=300") or die(mysqli_error());
+$res300320 = mysqli_fetch_array($_300320)[0];
+/*	$_300plus = mysqli_query($conn, "SELECT Count(*) FROM Shots where ClubNum=1 and ShotDistance>=300");
+$res300plus = mysqli_fetch_array($_300plus); */
+$_280300 = mysqli_query($conn, "SELECT Count(*) FROM Shots where ShotNum=1 and ShotDistance<=300 and ShotDistance>=280") or die(mysqli_error());
+$res280300 = mysqli_fetch_array($_280300)[0];
+$_260280 = mysqli_query($conn, "SELECT Count(*) FROM Shots where ShotNum=1 and ShotDistance<=280 and ShotDistance>=260") or die(mysqli_error());
+$res260280 = mysqli_fetch_array($_260280)[0];
+$_240260 = mysqli_query($conn, "SELECT Count(*) FROM Shots where ShotNum=1 and ShotDistance<=260 and ShotDistance>=240") or die(mysqli_error());
+$res240260 = mysqli_fetch_array($_240260)[0];
+$less240 = mysqli_query($conn, "SELECT Count(*) FROM Shots where ShotNum=1 and ShotDistance<=240") or die(mysqli_error());
+$resless240 = mysqli_fetch_array($less240)[0];
+$top5drives = mysqli_query($conn, "select ShotDistance from Shots where ShotNum=1 order by ShotDistance DESC limit 5") or die(mysqli_error());
 
 $result_array = array();
 
-while($row = mysql_fetch_assoc($top5drives))
+while($row = mysqli_fetch_array($top5drives))
 {
 $result_array[] = $row['ShotDistance'];
 }
@@ -128,7 +127,7 @@ echo "
 </div>
 
 ";
-	
+
 //close your connections
-mysql_close();
+mysqli_close($conn);
 ?>

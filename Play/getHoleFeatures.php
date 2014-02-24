@@ -1,7 +1,7 @@
 <?php
 
 	include '../Common/admininfo.php';
-	$conn = mysql_connect($dbhost,$username,$password);
+
 	$courseId = $_POST['courseId'];
 	
 	$holeFeatures = array();
@@ -15,11 +15,11 @@
 		$thisHole->pinlocation = array();
 		$thisHole->targetline = array();
 		$thisHole->par = array();
-		$query = mysql_query("SELECT FeatureType, AsText(FeatureValue) FROM `HoleInfo` where HoleNum='$i' and CourseId='$courseId'");
-		$queryPar = mysql_query("SELECT Par FROM `Holes` where HoleNum='$i' and CourseId='$courseId'");
-		while($row = mysql_fetch_array($query)){
+		$query = mysqli_query($conn, "SELECT FeatureType, AsText(FeatureValue) FROM `HoleInfo` where HoleNum='$i' and CourseId='$courseId'");
+		$queryPar = mysqli_query($conn, "SELECT Par FROM `Holes` where HoleNum='$i' and CourseId='$courseId'");
+		while($row = mysqli_fetch_array($query)){
 			if ($row['FeatureType'] == 'fairway') {
-				array_push($thisHole->fairway = $row['AsText(FeatureValue)']);
+				array_push($thisHole->fairway, $row['AsText(FeatureValue)']);
 			}
 			if ($row['FeatureType'] == 'green') {
 				$thisHole->green = $row['AsText(FeatureValue)'];
@@ -43,7 +43,7 @@
 				array_push($thisHole->targetline, $row['AsText(FeatureValue)']);
 			}
 		}
-		while($row = mysql_fetch_array($queryPar)){
+		while($row = mysqli_fetch_array($queryPar)){
 			$thisHole->par = $row['Par'];
 		}
 		array_push($holeFeatures,$thisHole);
@@ -51,5 +51,5 @@
 	echo json_encode($holeFeatures);
 
 	//close your connections
-	mysql_close();
+	mysqli_close($conn);
 ?> 

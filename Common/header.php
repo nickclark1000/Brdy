@@ -23,6 +23,9 @@
 			  <ul class='nav navbar-nav'>
 				<li ><a href='../Stats/stats.php'>Stats</a></li>
 			  </ul>
+			  <ul class="nav navbar-nav navbar-right">
+				<li><a href="../Common/logout.php">Log Out</a></li>
+			  </ul>
 			</div><!--/.nav-collapse -->
 		</div>
 

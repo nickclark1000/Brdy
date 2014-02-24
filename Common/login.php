@@ -1,17 +1,17 @@
 <?php
-
+	session_start();
 	include 'admininfo.php';			
 
 	// post user data
-	$email = mysql_real_escape_string($_POST['loginEmail']);
-	$password = mysql_real_escape_string($_POST['loginPassword']);
+	$email = mysqli_real_escape_string($conn, $_POST['loginEmail']);
+	$password = mysqli_real_escape_string($conn, $_POST['loginPassword']);
 	
 	$sql = "SELECT * FROM Users WHERE Email='$email'";
-	$result = mysql_query($sql);
-	$row = mysql_fetch_array($result);
+	$result = mysqli_query($conn, $sql);
+	$row = mysqli_fetch_array($result);
 	
 	// Mysql_num_row is counting table row
-	$count = mysql_num_rows($result);
+	$count = mysqli_num_rows($result);
 	if($count != 1) {
 		header("location: index.php");
 	}
@@ -20,15 +20,17 @@
 	$hashpassword = $row['Password'];
 	$isPwdCorrect = password_verify($password, $hashpassword);
 
-	if($isPwdCorrect == 1){
+	if($isPwdCorrect == 1) {
 
-		header("location: ../Play/roundList.php");
+		$_SESSION['userId'] = $userid;
+//		$_SESSION['loggedIn'] = 1;
+		header("location: http://localhost:8888/Play/roundList.php");
 
 	}
 	else {
-		header("location: index.php?failed=1");
+//		header("location: http://localhost:8888/Common/index.php?failed=1");
 	}
 			
 	//close your connections
-	mysql_close();
+	mysqli_close($conn);
 ?> 

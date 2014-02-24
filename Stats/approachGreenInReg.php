@@ -1,7 +1,6 @@
 <?php
 
 	include '../Common/admininfo.php';
-	$conn = mysql_connect($dbhost,$username,$password);
 	
 	$ShotFrom = $_POST['value'];
 
@@ -54,60 +53,60 @@
 		$queryless75Total  .= " AND ShotFrom='$ShotFrom'";
 	}
 	
-	$totalHoles = mysql_query($queryHoles);
-	$resTotHoles = mysql_result($totalHoles,0);
-	$totalGIR = mysql_query($queryGIR);
-	$resTotGIR = mysql_result($totalGIR,0);
+	$totalHoles = mysqli_query($conn, $queryHoles);
+	$resTotHoles = mysqli_fetch_array($totalHoles)[0];
+	$totalGIR = mysqli_query($conn, $queryGIR);
+	$resTotGIR = mysqli_fetch_array($totalGIR)[0];
 	
-	$_200plus = mysql_query($query200plus);
-	$res200plus = mysql_result($_200plus, 0);
-	$_200plusTotal = mysql_query($query200plusTotal);
-	$res200plusTotal = mysql_result($_200plusTotal, 0);
+	$_200plus = mysqli_query($conn, $query200plus);
+	$res200plus = mysqli_fetch_array($_200plus)[0];
+	$_200plusTotal = mysqli_query($conn, $query200plusTotal);
+	$res200plusTotal = mysqli_fetch_array($_200plusTotal)[0];
 
-	$_100plus = mysql_query($query100plus);
-	$res100plus = mysql_result($_100plus, 0);
-	$_100plusTotal = mysql_query($query100plusTotal);
-	$res100plusTotal = mysql_result($_100plusTotal, 0);
+	$_100plus = mysqli_query($conn, $query100plus);
+	$res100plus = mysqli_fetch_array($_100plus)[0];
+	$_100plusTotal = mysqli_query($conn, $query100plusTotal);
+	$res100plusTotal = mysqli_fetch_array($_100plusTotal)[0];
 	
-	$_175200 = mysql_query($query175200);
-	$res175200 = mysql_result($_175200, 0);
-	$_175200Total = mysql_query($query175200Total);
-	$res175200Total = mysql_result($_175200Total, 0);
+	$_175200 = mysqli_query($conn, $query175200);
+	$res175200 = mysqli_fetch_array($_175200)[0];
+	$_175200Total = mysqli_query($conn, $query175200Total);
+	$res175200Total = mysqli_fetch_array($_175200Total)[0];
 	
-	$_150175 = mysql_query($query150175);
-	$res150175 = mysql_result($_150175, 0);
-	$_150175Total = mysql_query($query150175Total);
-	$res150175Total = mysql_result($_150175Total, 0);
+	$_150175 = mysqli_query($conn, $query150175);
+	$res150175 = mysqli_fetch_array($_150175)[0];
+	$_150175Total = mysqli_query($conn, $query150175Total);
+	$res150175Total = mysqli_fetch_array($_150175Total)[0];
 	
-	$_125150 = mysql_query($query125150);
-	$res125150 = mysql_result($_125150, 0);
-	$_125150Total = mysql_query($query125150Total);
-	$res125150Total = mysql_result($_125150Total, 0);
+	$_125150 = mysqli_query($conn, $query125150);
+	$res125150 = mysqli_fetch_array($_125150)[0];
+	$_125150Total = mysqli_query($conn, $query125150Total);
+	$res125150Total = mysqli_fetch_array($_125150Total)[0];
 	
-	$_less125 = mysql_query($queryless125);
-	$resless125 = mysql_result($_less125, 0);
-	$_less125Total = mysql_query($queryless125Total);
-	$resless125Total = mysql_result($_less125Total, 0);
+	$_less125 = mysqli_query($conn, $queryless125);
+	$resless125 = mysqli_fetch_array($_less125)[0];
+	$_less125Total = mysqli_query($conn, $queryless125Total);
+	$resless125Total = mysqli_fetch_array($_less125Total)[0];
 	
-	$_100125 = mysql_query($query100125);
-	$res100125 = mysql_result($_100125, 0);
-	$_100125Total = mysql_query($query100125Total);
-	$res100125Total = mysql_result($_100125Total, 0);
+	$_100125 = mysqli_query($conn, $query100125);
+	$res100125 = mysqli_fetch_array($_100125)[0];
+	$_100125Total = mysqli_query($conn, $query100125Total);
+	$res100125Total = mysqli_fetch_array($_100125Total)[0];
 	
-	$_less100 = mysql_query($queryless100);
-	$resless100 = mysql_result($_less100, 0);
-	$_less100Total = mysql_query($queryless100Total);
-	$resless100Total = mysql_result($_less100Total, 0);
+	$_less100 = mysqli_query($conn, $queryless100);
+	$resless100 = mysqli_fetch_array($_less100)[0];
+	$_less100Total = mysqli_query($conn, $queryless100Total);
+	$resless100Total = mysqli_fetch_array($_less100Total)[0];
 	
-	$_75100 = mysql_query($query75100);
-	$res75100 = mysql_result($_75100, 0);
-	$_75100Total = mysql_query($query75100Total );
-	$res75100Total = mysql_result($_75100Total, 0);
+	$_75100 = mysqli_query($conn, $query75100);
+	$res75100 = mysqli_fetch_array($_75100)[0];
+	$_75100Total = mysqli_query($conn, $query75100Total );
+	$res75100Total = mysqli_fetch_array($_75100Total)[0];
 	
-	$_less75 = mysql_query($queryless75);
-	$resless75 = mysql_result($_less75, 0);
-	$_less75Total = mysql_query($queryless75Total);
-	$resless75Total = mysql_result($_less75Total, 0);
+	$_less75 = mysqli_query($conn, $queryless75);
+	$resless75 = mysqli_fetch_array($_less75)[0];
+	$_less75Total = mysqli_query($conn, $queryless75Total);
+	$resless75Total = mysqli_fetch_array($_less75Total)[0];
 	
 	echo "
 	<h4># of holes: ".$resTotHoles."</h4>
@@ -140,5 +139,5 @@
 	";
 	
 	//close your connections
-	mysql_close();
+	mysqli_close($conn);
 ?>

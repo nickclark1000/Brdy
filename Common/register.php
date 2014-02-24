@@ -5,18 +5,18 @@
 	include 'admininfo.php';
 
 	// post user data
-	$firstname = mysql_real_escape_string($_POST['firstname']);
-	$lastname = mysql_real_escape_string($_POST['lastname']);
-	$email= mysql_real_escape_string($_POST['registerEmail']);
-	$password = mysql_real_escape_string($_POST['registerPassword']);
+	$firstname = mysqli_real_escape_string($conn, $_POST['firstname']);
+	$lastname = mysqli_real_escape_string($conn, $_POST['lastname']);
+	$email= mysqli_real_escape_string($conn, $_POST['registerEmail']);
+	$password = mysqli_real_escape_string($conn, $_POST['registerPassword']);
 	
 	//encrypt password
 	$encryptpass = password_hash($password, PASSWORD_DEFAULT);
 	
-	mysql_query("INSERT INTO Users (`FirstName`,`LastName`,`Email`,`Password`) VALUES ('$firstname','$lastname','$email','$encryptpass')") or die(mysql_error());	
+	mysqli_query($conn, "INSERT INTO Users (`FirstName`,`LastName`,`Email`,`Password`) VALUES ('$firstname','$lastname','$email','$encryptpass')") or die(mysql_error());	
 	
-//	header("Location: ../Play/roundList.php");	
+//	header("location: http://localhost:8888/Play/roundList.php");	
 		
 	//close your connections
-	mysql_close();
+	mysqli_close($conn);
 ?> 
