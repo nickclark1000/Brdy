@@ -251,7 +251,7 @@ function lastShotClick() {
 //	google.maps.event.clearListeners(map,'mousemove');
 //	ib.close(map);
 	//send the results to the PHP script that adds the point to the database
-	$.post("addShots.php", {shots: shots, roundId: roundId}, function(data){alertify.success("Hole Complete!");});
+	$.post("addShots.php", {shots: shots, roundId: roundId, numShots: numShots}, function(data){alertify.success("Hole Complete!");});
 }
 
 //Update the activeHole when the user switches holes via the carousel

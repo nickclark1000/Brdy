@@ -17,7 +17,6 @@ if (!isset($_SESSION['userId'])) {
 		<meta name="description" content="">
 		<meta name="author" content="Nicholas Clark" >
 		<link href="../Common/bootstrap/css/bootstrap.css" rel="stylesheet">
-		<link href="../Common/bootstrap/css/bootstrap-theme.css" rel="stylesheet">
 		<link href="css/play.css" rel="stylesheet">
 		<link href="../Common/bootstrap/css/bootstrap-typeahead.css" rel="stylesheet">
 		<link href="../Common/css/alertify.core.css" rel="stylesheet">

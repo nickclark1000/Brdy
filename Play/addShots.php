@@ -4,6 +4,7 @@
 
 	$data = $_POST["shots"];
 	$RoundId = $_POST["roundId"];
+	$NumShots = $_POST["numShots"];
 	
 	foreach ($data as $value) {
 		$HoleNum = $value['holeNum'];
@@ -21,9 +22,9 @@
 		$ShotTo = $value['shotTo'];
 		$ProximityAfterShot = $value['proximityAfterShot'];
 
-		mysqli_query($conn, "INSERT INTO Shots (`RoundId`, `HoleNum`, `ShotNum`,`ShotFrom`,`DistanceToHole`, `ShotDistance`, `ClubNum`, `ShotPosition`, `DirOffTarget`,`YdsOffFairwayCenter`,`YdsOffFairway`,`PercGreenAvailability`,`ShotFromDescription`,`ShotTo`,`ProximityAfterShot`) VALUES ('$RoundId', '$HoleNum', '$ShotNum', '$ShotFrom', '$DistanceToHole', '$ShotDistance', '$ClubNum', GeomFromText({$ShotPosition}),'$DirOffTarget', '$YdsOffFairwayCenter','$YdsOffFairway','$PercGreenAvailability','$ShotFromDescription','$ShotTo','$ProximityAfterShot')") or die(mysql_error()); 
+		mysqli_query($conn, "INSERT INTO Shots (`RoundId`, `HoleNum`, `ShotNum`,`ShotFrom`,`DistanceToHole`, `ShotDistance`, `ClubNum`, `ShotPosition`, `DirOffTarget`,`YdsOffFairwayCenter`,`YdsOffFairway`,`PercGreenAvailability`,`ShotFromDescription`,`ShotTo`,`ProximityAfterShot`) VALUES ('$RoundId', '$HoleNum', '$ShotNum', '$ShotFrom', '$DistanceToHole', '$ShotDistance', '$ClubNum', GeomFromText({$ShotPosition}),'$DirOffTarget', '$YdsOffFairwayCenter','$YdsOffFairway','$PercGreenAvailability','$ShotFromDescription','$ShotTo','$ProximityAfterShot')") or die(mysqli_error($conn)); 
 	}
-  
+	mysqli_query($conn, "INSERT INTO RoundInfo (`RoundId`, `HoleNum`, `Score`, `PenaltyStrokes`) VALUES ('$RoundId', '$HoleNum', '$NumShots', 0)") or die(mysqli_error($conn));  
 	//close your connections
 	mysqli_close($conn);
 ?> 

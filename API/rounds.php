@@ -56,7 +56,6 @@
         $sql = "INSERT INTO Rounds (UserId, CourseId, Date, Tournament) VALUES (:userId, :courseId, :roundDate, :tournament)";
         try {
             $dbcon = getConnection();
-            
             $stmt = $dbcon->prepare($sql);
             $stmt->bindParam("userId", $round->userId);
             $stmt->bindParam("courseId", $round->courseId);
@@ -64,7 +63,6 @@
             $stmt->bindParam("tournament", $round->tournament);
             $stmt->execute();
             $round->roundId = $dbcon->lastInsertId();
-
             $dbcon = null;
             returnAsJSON($round,$app);
         } catch(PDOException $e) {

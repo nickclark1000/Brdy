@@ -19,6 +19,7 @@ if (!isset($_SESSION['userId'])) {
 
     <!-- Le styles -->
     <link href="../Common/bootstrap/css/bootstrap.css" rel="stylesheet">
+    <link href="http://code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css" rel="stylesheet">
 	<!--<link href="css/brdyMap.css" rel="stylesheet"> -->
     <style>
       body {
@@ -61,7 +62,7 @@ if (!isset($_SESSION['userId'])) {
 				<li><a href="#" data-toggle="collapse" data-target="#aroundthegreen">Around the Green</a></li>
 					<div class="collapse" id="aroundthegreen">
 						<ul>
-							<li><a href="#">Up and Down</a></li>
+							<li><a id="up-and-downs" href="#">Up and Down</a></li>
 							<li><a href="#">Accuracy</a></li>
 							<li><a href="#">Scoring</a></li>
 						</ul>
@@ -127,6 +128,36 @@ if (!isset($_SESSION['userId'])) {
 					<span>Display: <select id="accuracy-filter1"><option value="1">Distance Ranges</option><option value='2'>Clubs</option></select></span>
 					<span>Shots from: <select id="accuracy-filter2" autocomplete="off" onchange="accuracyShotFromChange()"><option value="1" selected="selected">All shots</option><option value='fairway'>Fairway</option><option value='rough'>Rough</option><option value='fairwaybunker'>Fairway bunker</option><option value='teemarker'>Off the tee</option></select></span>
 					<div id="approach-accuracy-data"></div>
+				</div>
+				<div id="scrambling" style="display:none">
+					<div class="row">
+						<div class="col-md-9">
+							<h3>AROUND THE GREEN</h3>
+							<h4 style='color:#999999'>UP & DOWNS</h4>
+						</div>
+					
+						<div class="col-md-3">
+							<div style="margin-top:20px">
+								<label>From Date</label>
+								<input type="text" id="fromDate">
+								<label>To Date</label>
+								<input type="text" id="toDate">
+							</div>
+						</div>
+					</div>
+					<hr>
+					<div id="updown-placeholder" class='col-md-8' style="height:450px;"></div>
+					<div class='col-md-4'>
+						<table class='table table-striped' style='border-bottom:1px solid #e6e6e6'>
+							<thead>
+								<tr>
+									<th style='background-color:#00703C; color:#ffffff'>Distance Range (yds)</th>
+									<th style='background-color:#00703C; color:#ffffff'>Attempts</th>
+								</tr>
+							</thead>
+							<tbody id="scrambling-data"></tbody>
+						</table>
+					</div>
 				</div> 
 			</div>
 	 	</div>

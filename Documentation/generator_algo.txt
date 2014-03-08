@@ -1,0 +1,21 @@
+1.  Get hole length (e.g., 400 yds)
+2.  Get avg tee shot distance with driver (e.g., 300 yds)
+3.  Pick point on fairway polyline that lies 300yds from tee box or closest to 300 yds.
+4.  Get heading between tee shot location and pt from 3
+5.  Get perpendicular headings
+6.  With 1st heading, use 3 to get distance to edge of right fairway
+7.  With 2nd heading, use 3 to get distance to edge of left fairway
+8.  Get L or R of target with random number and probability model
+9.  Get avg distance off target when L or R
+10. Get generated shot location #1
+11. Get ShotFrom category
+12. Get distance to middle of green
+13. Get club whose avg distance is closest to the hole distance
+13. Get a heading between the shot location and the hole (middle of green for now)
+14. Get perpendicular headings
+15. With 1st heading, use 3 to get distance to edge of right green
+16. With 2nd heading, use 3 to get distance to edge of left green
+17. Get L or R of target with random number and probability model
+18. Get avg distance off target when L or R
+#. Get generated shot location #2
+#.  

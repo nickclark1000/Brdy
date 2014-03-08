@@ -52,6 +52,68 @@ document.getElementById("approachGreenInReg").onclick = function(){
 		}
 	});
 }
+document.getElementById("up-and-downs").onclick = function(){
+	$("#reportBody").children().hide();
+	var string = '1';
+	var percData = [];
+	var ticks = [];
+	$.ajax({
+		type: "GET",
+		url: "http://localhost:8888/API/stats.php/UpDowns",
+		success: function(upDown){
+			var upDown = JSON.parse(upDown);
+			var attempt = upDown.Attempts;
+			var success = upDown.Successes;
+			var length = Object.keys(success).length;
+			
+			for (i=0; i < length ; i++) {
+				var category = Object.keys(attempt)[i];
+				var percentage = roundToTwo(success[category]/attempt[category]*100);
+				percData.push([i,percentage]);
+				ticks.push([i,category]);
+				$("#scrambling-data").append("<tr><td>" + category + "</td><td>" + attempt[category] + "</td></tr>");
+			}
+			console.log(ticks);
+			$("#scrambling").show();
+
+			console.log(percData);
+			var dataset = [{ label: "Up & Downs", data: percData, color: "#5482FF" }];
+			var option = {
+				series: {
+					bars:{
+						show: true,
+						fill: true
+					}
+				},
+				bars: {
+					barWidth: 0.75,
+					align: 'center'
+				},
+				xaxis: {
+					axisLabel: 'Yards',
+					ticks: ticks,
+					tickColor: '#f6f6f6',
+					color:'black'
+				},
+				yaxis: {
+					axisLabel: 'Percentage',
+					color: 'black',
+					max: 100,
+					axisLabelPadding: 10,
+					tickColor: '#f6f6f6',
+				},
+			};
+
+			$.plot($('#updown-placeholder'),dataset,option);
+
+		}
+	});
+}
+
+$(function() {
+	$( "#fromDate" ).datepicker();
+	$( "#toDate" ).datepicker();
+});
 
 function GIRshotFromChange() {
 	var selValue = document.getElementById('filter2').value;		
@@ -67,3 +129,9 @@ function accuracyShotFromChange() {
 	});
 }
 
+function roundToTwo(num) {
+	if (isNaN(num)==true) {
+		return 0;
+	}
+    return +(Math.round(num + "e+2")  + "e-2");
+}

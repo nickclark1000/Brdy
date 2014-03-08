@@ -1,7 +1,5 @@
 TO DO:
 - search by course
-- common template for header
-- integrate round ids
 - incorporate bunkers
 - penalty shots (trigger another shot when user clicks in water)
 - admin console for updating daily pin positions and defining course features
@@ -9,7 +7,6 @@ TO DO:
 - icons for shots and pins
 - default the clubUsed to putter when they are on the green
 - add animation for each shot
-- confirmation of hole completed
 - confirmation of hole feature added
 - edit markers - change their location
 - determine where putts are missed using heading calculation relative to straight line between the original putt location and the hole
@@ -22,3 +19,6 @@ TO DO:
 COMPLETED:
 - cycle through each teeblock for the first tee shot
 - add ProximityAfterShot parameter to each shot object
+- confirmation of hole completed
+- integrate round ids
+- common template for header
