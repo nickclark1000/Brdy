@@ -1,8 +1,8 @@
 <?php
 
 include '../Common/admininfo.php';
-include_once('../Common/geoPHP/geoPHP.inc');
-include '../Common/spherical-geometry-php/spherical-geometry.class.php';
+include_once($_SERVER['DOCUMENT_ROOT'].'/geoPHP/geoPHP.inc');
+include $_SERVER['DOCUMENT_ROOT'].'/spherical-geometry-php/spherical-geometry.class.php';
 
 $CourseId = 1; //$_POST['courseId'];
 $UserId = $_POST['userId'];
