@@ -1,14 +1,19 @@
 <?php
 
-include '../Common/admininfo.php';
+
 include_once($_SERVER['DOCUMENT_ROOT'].'/geoPHP/geoPHP.inc');
 include $_SERVER['DOCUMENT_ROOT'].'/spherical-geometry-php/spherical-geometry.class.php';
+include '../Play/getHoleFeatures.php';
+include '../Common/admininfo.php';
 
 $CourseId = 1; //$_POST['courseId'];
-$UserId = $_POST['userId'];
+$UserId = 1; //$_POST['userId'];
+$ShotFrom = 'teemarker';
+
+//print_r($holeFeatures);
 
 //Get hole lengths (e.g., 400 yds) into an array
-$HoleDistance = mysqli_query($conn, "select Yardage from Holes where CourseId = '$CourseId'") or die(mysqli_error());
+$HoleDistance = mysqli_query($conn, "select Yardage from Holes where CourseId = '$CourseId'") or die(mysqli_error($conn));
 while($row = mysqli_fetch_array($HoleDistance))
 {
 $HoleYardageArray[] = $row['Yardage'];
@@ -56,11 +61,6 @@ $TeeblockQuery = mysqli_query($conn, "SELECT AsText(FeatureValue) from HoleInfo 
 $TeeblockResult = mysqli_fetch_array($TeeblockQuery)[0];
 $teeblock = geoPHP::load($TeeblockResult, 'wkt');
 
-if (SphericalGeometry::containsLocation($teemarker, $teeblock)==true){
-  echo "Is in polygon!";
-}
-else echo "Is not in polygon";
-
 //Get heading between tee shot location and pt from 3
 $lon1 = $teemarker->x();
 $lat1 = $teemarker->y();
@@ -71,22 +71,66 @@ $TargetPt = new LatLng($TargetLat, $TargetLon);
 $TeemarkerPt = new LatLng($lat1, $lon1);
 
 $heading = SphericalGeometry::computeHeading($TeemarkerPt, $TargetPt);
-echo "....".SphericalGeometry::computeDistanceBetween($TeemarkerPt, $TargetPt);
 
-//Get perpendicular headings
-$headingR90 = $heading + 90;
-$headingL90 = $heading - 90;
+//Get L or R of target and distance with random number and probability model
+$data = getShotOutcomeData($UserId, $ClubNum, $ShotFrom, $conn);
+$outcome = getShotOutcome($data);
 
-//With 1st heading, use 3 to get distance to edge of right fairway
+//Get perpendicular heading
+if ($outcome['Direction'] == 'L') {
+	$heading_perp = $heading + 90;
+} else {
+	$heading_perp = $heading - 90;
+}
 
+//echo json_encode($outcome);
 
+//With 1st heading, get temp location without L or R offset
+$Shot1temp = SphericalGeometry::computeOffset($TeemarkerPt, $resAvgDrive, $heading);
+
+//Get generated shot location #1
+$Shot1 = SphericalGeometry::computeOffset($Shot1temp, $outcome['Distance'], $heading_perp);
+$Shot1Geo = latLngToGeo($Shot1);
+//print_r($Shot1);
+
+//Get ShotTo category
+echo getShotLocationCategory(1,$Shot1Geo, $holeFeatures);
+
+function latLngToGeo($LatLng) {
+	$lat = $LatLng->getLat();
+	$lng = $LatLng->getLng();
+	$wkt = "POINT(".$lng." ".$lat.")";
+
+	return geoPHP::load($wkt,'wkt');
+}
+
+function getShotLocationCategory($HoleNum, $ShotGeo, $holeFeatures) {
+	foreach ($holeFeatures[$HoleNum-1]->fairway as $key=>$fairway) {
+		if (SphericalGeometry::containsLocation($ShotGeo, $fairway)==true){
+		  return "Is in fairway!";
+		}
+	}
+	foreach ($holeFeatures[$HoleNum-1]->fairwaybunker as $key=>$fairwaybunker) {
+		if (SphericalGeometry::containsLocation($ShotGeo, $fairwaybunker)==true){
+		  return "Is in fairway bunker!";
+		}
+	}
+	foreach ($holeFeatures[$HoleNum-1]->bunker as $key=>$bunker) {
+		if (SphericalGeometry::containsLocation($ShotGeo, $bunker)==true){
+		  return "Is in bunker!";
+		}
+	}
+	if (SphericalGeometry::containsLocation($ShotGeo, $holeFeatures[$HoleNum-1]->green)==true){
+		return "Is on green!";
+	}
+	return "Is not in fairway";
+}
 
 /*
-With 2nd heading, use 3 to get distance to edge of left fairway
-Get L or R of target with random number and probability model
-Get avg distance off target when L or R
-Get generated shot location #1
-Get ShotFrom category
+
+
+
+
 Get distance to middle of green
 Get club whose avg distance is closest to the hole distance
 Get a heading between the shot location and the hole (middle of green for now)
@@ -113,6 +157,53 @@ function getDistance($lat1, $lon1, $lat2, $lon2) {
 	return $d;
 }
 */
+
+//data includes Distance and Direction
+function getShotOutcome($data) {
+	$Rdist = 0;
+	$Rcount = 0;
+	$Ldist = 0;
+	$Lcount = 0;
+	foreach ($data as $key=>$value) {
+	//print_r($value['Direction']);
+		if ($value['Direction'] == 'L') {
+			$Ldist += $value['Distance'];
+			$Lcount += 1;
+		} else {
+			$Rdist += $value['Distance'];
+			$Rcount += 1;
+		}
+	}
+	$L_avg_dist = $Ldist / $Lcount;
+	$R_avg_dist = $Rdist / $Rcount;
+	
+	$L_prob = $Lcount / count($data);
+	$R_prob = $Rcount / count($data);
+
+	$Rand = rand(0,100000)/100000;
+	if ($Rand <= $L_prob) {
+		$outcome = array("Direction"=>"L","Distance"=>$L_avg_dist);
+		return $outcome;
+	} else {
+		$outcome = array("Direction"=>"R","Distance"=>$R_avg_dist);
+		return $outcome;
+	}
+}
+
+function getShotOutcomeData($UserId, $ClubNum, $ShotFrom, $conn) {
+	$dataList = array();
+	
+	$ShotQuery = mysqli_query($conn, "SELECT YdsOffFairwayCenter, DirOffTarget FROM Shots a INNER JOIN Rounds b on a.RoundId = b.RoundId where b.UserId = '$UserId' and ShotFrom = '$ShotFrom' and ClubNum = '$ClubNum'") or die(mysqli_error());
+	while($row = mysqli_fetch_array($ShotQuery)){
+		$Direction = $row['DirOffTarget'];
+		$Distance = $row['YdsOffFairwayCenter'];
+		$data = array("Distance"=>$Distance, "Direction"=>$Direction);
+		array_push($dataList, $data);
+		
+	}
+	return $dataList;
+}
+
 //close connection
 mysqli_close($conn);
 
