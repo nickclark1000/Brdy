@@ -17,8 +17,9 @@ if (isset($_POST['courseId'])) {
 		$thisHole->pinlocation = array();
 		$thisHole->targetline = array();
 		$thisHole->par = array();
+		$thisHole->yardage = array();
 		$query = mysqli_query($conn, "SELECT FeatureType, AsText(FeatureValue) FROM `HoleInfo` where HoleNum='$i' and CourseId='$courseId'");
-		$queryPar = mysqli_query($conn, "SELECT Par FROM `Holes` where HoleNum='$i' and CourseId='$courseId'");
+		$queryPar = mysqli_query($conn, "SELECT Par, Yardage FROM `Holes` where HoleNum='$i' and CourseId='$courseId'");
 		while($row = mysqli_fetch_array($query)){
 			if ($row['FeatureType'] == 'fairway') {
 				array_push($thisHole->fairway, $row['AsText(FeatureValue)']);
@@ -47,6 +48,7 @@ if (isset($_POST['courseId'])) {
 		}
 		while($row = mysqli_fetch_array($queryPar)){
 			$thisHole->par = $row['Par'];
+			$thisHole->yardage = $row['Yardage'];
 		}
 		array_push($holeFeatures,$thisHole);
 	}

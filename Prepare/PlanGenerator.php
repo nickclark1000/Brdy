@@ -1,6 +1,5 @@
 <?php
 
-
 include_once($_SERVER['DOCUMENT_ROOT'].'/geoPHP/geoPHP.inc');
 include $_SERVER['DOCUMENT_ROOT'].'/spherical-geometry-php/spherical-geometry.class.php';
 include '../Play/getHoleFeatures.php';

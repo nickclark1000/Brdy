@@ -17,18 +17,19 @@ thisHole = {};
 userId = 1;
 shotsToGreen = 0;
 clubs = {};
-
+/*
 //load the html of the carousel items
 document.getElementsByClassName("carousel-inner")[0].innerHTML = "<div class='active item' style='height:90px; text-align:center'><h4 style='margin-bottom:0px'>Hole 1</h4><table class='table-condensed' style='margin:auto'><thead><tr><th style='padding-bottom: 0px'>Score</th><th style='padding-bottom: 0px'>Fairway</th><th style='padding-bottom: 0px'>Green</th><th style='padding-bottom: 0px'>Putts</th></tr></thead><tbody><tr><td class='holeScore'>-</td><td class='holeFairwayHit'>-</td><td class='holeGreenHit'>-</td><td class='holePutts'>-</td></tr></tbody></table></div>";
 for(i=2;i<19;i++){
 	$( ".carousel-inner" ).append("<div class='item' style='height:90px; text-align:center'><h4 style='margin-bottom:0px'>Hole "+ i +"</h4><table class='table-condensed' style='margin:auto'><thead><tr><th style='padding-bottom: 0px'>Score</th><th style='padding-bottom: 0px'>Fairway</th><th style='padding-bottom: 0px'>Green</th><th style='padding-bottom: 0px'>Putts</th></tr></thead><tbody><tr><td class='holeScore'>-</td><td class='holeFairwayHit'>-</td><td class='holeGreenHit'>-</td><td class='holePutts'>-</td></tr></tbody></table></div>");
 }
-
-//load the features for every hole on page load
-var holeFeatures = [];
+*/
 var url = $.url();
 var courseId = url.param('crs');
 var roundId = url.param('rnd');
+
+//load the features for every hole on page load
+var holeFeatures = [];
 
 $.ajax({
 	type: "POST",

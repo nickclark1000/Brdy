@@ -36,14 +36,36 @@ if (!isset($_SESSION['userId'])) {
 	<body>
     	<!-- include header template -->
 		<?php include("../Common/header.php"); ?>
-		
-		<div style="height:100%">
-			<div id="map_canvas"></div>
-			<div id="shotBar">
-				<div id="noShots">
-					<h3>No Shots Yet</h3>
+		<div class="container-fluid">
+			<div class="row" style="padding:10px 0px; margin:0px">
+				<div class="col-xs-6" style="padding:0px">
+					<div class="pull-right" style="padding-right:10px; border-right: 1px solid black">
+						<h4>Brampton Golf Club</h4>
+					</div>
+				</div>
+				<div class="col-xs-6" style="padding:0px">
+					<div id="myCarousel" class="carousel slide" data-ride="carousel">
+						<div class="carousel-inner" style="padding-left:10px">
+							<h5 style="margin:0px">Hole 1</h5>
+							<p>Par 4 | 350 yds</p>
+						</div>
+						
+						<a class="carousel-control" style="bottom:0;" href="#myCarousel" data-slide="prev"><span class="glyphicon glyphicon-chevron-down"></span></a>
+						<a class="carousel-control" style="top:0; left:111px" href="#myCarousel" data-slide="next"><span class="glyphicon glyphicon-chevron-up"></span></a>
+					</div>					
 				</div>
 			</div>
+		</div>
+		<div class="wrapper">
+			<div id="content">
+				<div id="map_canvas"></div>
+			</div>
+		</div>
+		<div id="shotBar">
+			<div id="noShots">
+				<h3>No Shots Yet</h3>
+			</div>
+		</div>
 		<!--	
 			<div class="row" style="position: absolute; top:70px; left:40px; max-width:400px; width:90%; padding-right:10px;">
 				<div class="input-group">
@@ -53,15 +75,8 @@ if (!isset($_SESSION['userId'])) {
 				  </span>
 				</div>
 			</div>
-		-->	
-			<div class="panel" style="width:320px;height:90px;border:#999999 1px solid; background-color: #ffffff; position:absolute; top:90px; left:30px">
-				<div id="myCarousel" class="carousel slide" data-ride="carousel">
-      				<div class="carousel-inner" style="text-align:center"></div>
-      				<a class="left carousel-control" href="#myCarousel" data-slide="prev"><span class="glyphicon glyphicon-chevron-left"></span></a>
-     				<a class="right carousel-control" href="#myCarousel" data-slide="next"><span class="glyphicon glyphicon-chevron-right"></span></a>
-    			</div><!-- /.carousel -->
-			</div>
-		</div>
+			 -->
+		
 
 		<!-- Javascript -->
 		<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?&sensor=false&libraries=drawing,geometry"> </script>
@@ -73,7 +88,7 @@ if (!isset($_SESSION['userId'])) {
 		<script type="text/javascript" src="../Common/js/purl.js"> </script>
 		<script type="text/javascript" src="js/infobox.js"></script>
 		<script type="text/javascript" src="../Common/js/alertify.js"></script>
-		<script type="text/javascript" src="js/addRound_gmap.js"></script>
+		<script type="text/javascript" src="js/addRound.js"></script>
 		<script type="text/javascript" src="../Common/bootstrap/js/bootstrap.min.js"></script>
 		<script type="text/javascript" src="../Common/js/typeahead.js"></script>
 		<script type="text/javascript" src="../Common/js/courseTypeahead.js"></script>

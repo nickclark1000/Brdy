@@ -59,7 +59,7 @@ document.getElementById("up-and-downs").onclick = function(){
 	var ticks = [];
 	$.ajax({
 		type: "GET",
-		url: "http://localhost:8888/API/stats.php/UpDowns",
+		url: "http://localhost:8888/Brdy/API/stats.php/UpDowns",
 		success: function(upDown){
 			var upDown = JSON.parse(upDown);
 			var attempt = upDown.Attempts;
