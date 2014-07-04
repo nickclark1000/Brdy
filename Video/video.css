@@ -1,0 +1,85 @@
+body {
+  padding-top: 50px; /* 60px to make the container go all the way to the bottom of the topbar */
+}
+#wrapper{
+  position:relative;
+}
+#canvas,#canvasTemp{
+    position:absolute; 
+    top:0px; 
+    left:0px;
+    z-index: 99;
+}
+#canvasTemp{ border:1.5px solid green; }
+#canvas{ border:1px solid red; }
+
+/*
+ * Sidebar
+ */
+
+.sidebar {
+    position: fixed;
+    top: 51px;
+    bottom: 0;
+    left: 0;
+    z-index: 1000;
+    display: block;
+    padding: 20px;
+    overflow-x: hidden;
+    overflow-y: auto; /* Scrollable contents if viewport is shorter than content. */
+    background-color: #fff;
+    border-right: 1px solid #eee;
+}
+
+/* Sidebar navigation */
+.nav-sidebar {
+  margin-right: -21px; /* 20px padding + 1px border */
+  margin-bottom: 20px;
+  margin-left: -20px;
+}
+.nav-sidebar > li > a {
+  padding-right: 20px;
+  padding-left: 20px;
+}
+.nav-sidebar > .active > a {
+  color: #fff;
+  background-color: #428bca;
+}
+
+.media:hover {
+  cursor: pointer;
+  background-color: #f5f5f5;
+}
+
+.media {
+  padding: 5px;
+  margin: 0px;
+}
+
+.media-body > h4 {
+    color: #1B7FCC;
+}
+
+.caption > h5 {
+    color: #1B7FCC;
+}
+.thumbnail:hover {
+  cursor: pointer;
+  background-color: #f5f5f5;
+}
+
+.paging-button {
+  visibility: hidden;
+}
+
+.button-container {
+  clear: both;
+}
+
+h1,h2,h3,h4,h5 {
+  margin:0px;
+}
+
+hr {
+  margin-top:10px;
+}

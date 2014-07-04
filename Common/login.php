@@ -24,11 +24,11 @@
 
 		$_SESSION['userId'] = $userid;
 //		$_SESSION['loggedIn'] = 1;
-		header("location: http://localhost:8888/Play/roundList.php");
+		header("location: http://localhost:8888/Brdy/Play/roundList.php");
 
 	}
 	else {
-//		header("location: http://localhost:8888/Common/index.php?failed=1");
+//		header("location: http://localhost:8888/Brdy/Common/index.php?failed=1");
 	}
 			
 	//close your connections

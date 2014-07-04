@@ -40,15 +40,12 @@ if (!isset($_SESSION['userId'])) {
 			<div class="row" style="padding:10px 0px; margin:0px">
 				<div class="col-xs-6" style="padding:0px">
 					<div class="pull-right" style="padding-right:10px; border-right: 1px solid black">
-						<h4>Brampton Golf Club</h4>
+						<h4 id='course-name'></h4>
 					</div>
 				</div>
 				<div class="col-xs-6" style="padding:0px">
 					<div id="myCarousel" class="carousel slide" data-ride="carousel">
-						<div class="carousel-inner" style="padding-left:10px">
-							<h5 style="margin:0px">Hole 1</h5>
-							<p>Par 4 | 350 yds</p>
-						</div>
+						<div class="carousel-inner" style="padding-left:10px; width: 120px;"></div>
 						
 						<a class="carousel-control" style="bottom:0;" href="#myCarousel" data-slide="prev"><span class="glyphicon glyphicon-chevron-down"></span></a>
 						<a class="carousel-control" style="top:0; left:111px" href="#myCarousel" data-slide="next"><span class="glyphicon glyphicon-chevron-up"></span></a>
@@ -66,6 +63,8 @@ if (!isset($_SESSION['userId'])) {
 				<h3>No Shots Yet</h3>
 			</div>
 		</div>
+		
+
 		<!--	
 			<div class="row" style="position: absolute; top:70px; left:40px; max-width:400px; width:90%; padding-right:10px;">
 				<div class="input-group">
@@ -88,8 +87,8 @@ if (!isset($_SESSION['userId'])) {
 		<script type="text/javascript" src="../Common/js/purl.js"> </script>
 		<script type="text/javascript" src="js/infobox.js"></script>
 		<script type="text/javascript" src="../Common/js/alertify.js"></script>
-		<script type="text/javascript" src="js/addRound.js"></script>
 		<script type="text/javascript" src="../Common/bootstrap/js/bootstrap.min.js"></script>
+		<script type="text/javascript" src="js/addRound.js"></script>
 		<script type="text/javascript" src="../Common/js/typeahead.js"></script>
 		<script type="text/javascript" src="../Common/js/courseTypeahead.js"></script>
 	</body>

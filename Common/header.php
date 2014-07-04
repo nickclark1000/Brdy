@@ -23,9 +23,16 @@
 			  <ul class='nav navbar-nav'>
 				<li ><a href='../Stats/stats.php'>Stats</a></li>
 			  </ul>
+			  <ul class='nav navbar-nav'>
+				<li ><a href='../Video/video.php'>Lessons</a></li>
+			  </ul>
 			  <ul class="nav navbar-nav navbar-right">
 				<li><a href="../Common/logout.php">Log Out</a></li>
 			  </ul>
+			  <ul class="nav navbar-nav navbar-right">
+				<li><a href="../Common/profile.php">Nick</a></li>
+			  </ul>
+			  <button class='btn' id="authorize-button" style="visibility: hidden">Authorize</button>
 			</div><!--/.nav-collapse -->
 		</div>
 

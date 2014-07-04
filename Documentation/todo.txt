@@ -1,6 +1,5 @@
 TO DO:
 - search by course
-- incorporate bunkers
 - penalty shots (trigger another shot when user clicks in water)
 - admin console for updating daily pin positions and defining course features
 - tutorial for mapping courses
@@ -14,7 +13,7 @@ TO DO:
 - add date range as a filter to stats module
 - add filter for displaying GIR stats by club
 - stats - graph for closed distance ranges (150-175) and table for < or > ranges (<100)
-- move containsLocation and Distance functions to server side
+- help section
 
 COMPLETED:
 - cycle through each teeblock for the first tee shot
@@ -22,3 +21,5 @@ COMPLETED:
 - confirmation of hole completed
 - integrate round ids
 - common template for header
+- incorporate bunkers
+- move containsLocation and Distance functions to server side

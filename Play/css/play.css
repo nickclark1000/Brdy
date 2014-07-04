@@ -26,7 +26,7 @@ hr {
 	position: absolute;
 	left: 0;
 	right: 0;
-    }
+}
 
 #map_canvas { 
 	height: 100%;
@@ -63,4 +63,14 @@ hr {
 	text-align: center;
 	color:#999;
 	margin:auto;
+}
+
+.glyphicon-edit {
+	color:#666666;
+	cursor: pointer;
+	font-size: 18px;
+}
+
+.glyphicon:hover {
+	color:#000000;
 }

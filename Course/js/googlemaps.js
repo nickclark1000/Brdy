@@ -8,7 +8,9 @@ function initialize() {
 		mapTypeControl: false,
 		mapTypeId: google.maps.MapTypeId.SATELLITE
 	};
-	var map = new google.maps.Map(document.getElementById("map_canvas"),mapOptions);
+	map = new google.maps.Map(document.getElementById("map_canvas"),mapOptions);
+    
+    navigator.geolocation.getCurrentPosition(show_map);
     
 	var drawingManager = new google.maps.drawing.DrawingManager({
 		drawingControl: false,
@@ -240,24 +242,34 @@ var clientId = 'NIY1H3QPT43DVZJ2FG2EK5YFRMILD1OSZMHWAGHX4RNJ4H3T';
 var clientSecret = 'OG12GDFTJJT3IXNQOG431LR0IFIFJGMYTVD0LWT3Y3EN5MET';
 var query = 'golf';
 
-navigator.geolocation.getCurrentPosition(show_map);
-
 latitude = '';
 longitude = '';
 
 function show_map(position) {
-  latitude = position.coords.latitude;
-  longitude = position.coords.longitude;
-  console.log(latitude + ',' + longitude);
-  // let's show a map or do something interesting!
-  getFoursquareData();
+  	latitude = position.coords.latitude;
+  	longitude = position.coords.longitude;
+  	var latLng = new google.maps.LatLng(latitude, longitude);
+	var selfMarker = new google.maps.Marker({
+		position: latLng, 
+	});
+	selfMarker.setMap(map);
+	map.setCenter(latLng);
+	console.log(latitude + ',' + longitude);
+	// let's show a map or do something interesting!
+	getFoursquareData();
 }
 function getFoursquareData() {
-$.getJSON('https://api.foursquare.com/v2/venues/search?categoryId=4bf58dd8d48988d1e6941735&near=Moncton,NB&query=' + query + '&client_id=' + clientId + '&client_secret=' + clientSecret + '&v=20130209',
+	$.getJSON('https://api.foursquare.com/v2/venues/search?categoryId=4bf58dd8d48988d1e6941735&ll=' + latitude +',' + longitude + '&query=' + query + '&client_id=' + clientId + '&client_secret=' + clientSecret + '&v=20130209',
     function(data) {
         $.each(data.response.venues, function(i,venues){
-            content = '<p>' + venues.name + '</p>';
+            content =   "<a class='list-group-item' style='border:none'><h4 class='list-group-item-heading'>" + venues.name + "</h4><p class='list-group-item-text'>" + venues.location.address + "</p></a>";
             $(content).appendTo("#names");
+            var latLng = new google.maps.LatLng(venues.location.lat, venues.location.lng);
+            var courseMarker = new google.maps.Marker({
+				position: latLng,
+				title: venues.name
+			});
+			courseMarker.setMap(map);
        });
 });
 }

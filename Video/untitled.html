@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+	</head>
+
+	<body>
+	  	<!-- <img id="scream" src="http://maps.googleapis.com/maps/api/staticmap?center=43.640217,-79.788284&zoom=16&size=600x300&maptype=satellite" crossOrigin="http://maps.googleapis.com/crossdomain.xml" alt="The Scream" width="600" height="300"> -->
+	  	<canvas id='my-canvas' width="600" height="300" style="border:1px solid red"></canvas>
+	  	<div>pixel color:<label id='pixel-color'>null</label></div>
+	  	<script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+	  	<script>
+			
+			gmap = new Image();
+			gmap.src = 'http://maps.googleapis.com/maps/api/staticmap?center=43.640217,-79.788284&zoom=16&size=600x300&maptype=satellite';
+			gmap.crossOrigin = 'http://maps.googleapis.com/crossdomain.xml';
+
+			gmap.onload = function() {
+	      	    var canvas = document.getElementById("my-canvas");
+				var context = canvas.getContext("2d");
+				var canvasOffset=$("#my-canvas").offset();
+				var offsetX=canvasOffset.left;
+				var offsetY=canvasOffset.top;
+
+				context.drawImage(gmap,0,0);
+				var imgData=context.getImageData(0,0,canvas.width,canvas.height);
+				var imgDataLength = imgData.data.length / 4;
+
+		  	  	//map: make two dimensional array to store which pixels detect green
+				//scores: 2d array to store the 5x5 scores for each pixel. Each pixel
+				//	gets a score of the summary of the green pixels around it. It looks
+				//	at the 5 pixels to the left, right, above and below the pixel. The
+				//	pixel gets the score of the sum of that total.
+				var w = canvas.width;
+				var h = canvas.height;
+				var map = new Array(w);
+				var scores = new Array(w);
+				for(var i = 0; i < w; i++){
+					map[i] = new Array(h);
+					scores[i] = new Array(h);
+				}
+				//load the map with 1 and 0 for green and non-green pixels respectively
+				for(var i = 0; i < 12; i++){
+					var index = i*4;
+					var r = imgData.data[index],
+						g = imgData.data[index+1],
+						b = imgData.data[index+2];
+					var hsl = rgb2hsl(r, g, b),
+						ha = hsl[0],
+						s = hsl[1],
+						l = hsl[2];
+					 // console.log(hsl);
+					var left = Math.floor(i%w);
+					var top = Math.floor(i/w);
+						
+					if (ha >= 70 && ha <= 180 && s >= 25 && s <= 90 && l >= 20 && l <= 95) {
+						imgData.data[i * 4 + 3] = 0;
+						map[left][top] = 1;
+					} else {
+						map[left][top] = 0;
+					}
+				}
+
+				//sum the score for each pixel
+				for(var j = 5; j < h-5; j++){
+					for(var i = 5; i < w-5; i++){
+						var l5 = map[i-5][j],
+							l4 = map[i-4][j],
+							l3 = map[i-3][j],
+							l2 = map[i-2][j],
+							l1 = map[i-1][j],
+							r1 = map[i+1][j],
+							r2 = map[i+2][j],
+							r3 = map[i+3][j],
+							r4 = map[i+4][j],
+							r5 = map[i+5][j],
+							u5 = map[i][j-5],
+							u4 = map[i][j-4],
+							u3 = map[i][j-3],
+							u2 = map[i][j-2],
+							u1 = map[i][j-1],
+							d1 = map[i][j+1],
+							d2 = map[i][j+1],
+							d3 = map[i][j+1],
+							d4 = map[i][j+1],
+							d5 = map[i][j+1],
+							self = map[i][j];
+						//console.log(i,j);
+						scores[i][j] = l5+l4+l3+l2+l1+r1+r2+r3+r4+r5+u5+u4+u3+u2+u1+d1+d2+d3+d4+d5+self;
+					}
+				}
+				function handleMouseDown(e){
+					e.preventDefault();
+					mouseX=parseInt(e.clientX-offsetX);
+					mouseY=parseInt(e.clientY-offsetY);
+					console.log(mouseX + ',' + mouseY);
+					var mouseData=context.getImageData(mouseX,mouseY,1,1);
+					var r = mouseData.data[0],
+							g = mouseData.data[1],
+							b = mouseData.data[2];
+						var mousehsl = rgb2hsl(r, g, b),
+							ha = hsl[0],
+							s = hsl[1],
+							l = hsl[2];
+						  console.log(mousehsl);
+					$('#pixel-color').html('x:' + mouseX + ', y:' + mouseY);
+				};
+				$("#my-canvas").mousedown(function(e){handleMouseDown(e);});
+			};
+
+			function rgb2hsl(r, g, b) {
+			    r /= 255; g /= 255; b /= 255;
+			    var min = Math.min(r, g, b),
+			        max = Math.max(r, g, b),
+			        delta = max - min,
+			        h, s, l;
+
+			    if (max == min) {
+			    	h = 0;
+			    } else if (r == max) {
+			    	h = (g - b) / delta;
+			    } else if (g == max) {
+			    	h = 2 + (b - r) / delta;
+			    } else if (b == max) {
+			    	h = 4 + (r - g) / delta;
+			    }
+
+			    h = Math.min(h * 60, 360);
+
+			    if (h < 0) {
+			    	h += 360;
+			    }
+
+			    l = (min + max) / 2;
+
+			    if (max == min) {
+			    	s = 0;
+			    } else if (l <= 0.5) {
+			    	s = delta / (max + min);
+			    } else {
+				    s = delta / (2 - max - min);
+			    }
+
+			    return [h, s * 100, l * 100];
+			}
+			
+		</script>
+	</body>
+</html>

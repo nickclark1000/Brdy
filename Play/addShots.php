@@ -5,7 +5,7 @@ include $_SERVER['DOCUMENT_ROOT'].'/spherical-geometry-php/spherical-geometry.cl
 include '../Play/getHoleFeatures.php';
 include '../Common/admininfo.php';
 
-$data = $_POST["shots"];
+$data = $_POST["shotData"];
 $RoundId = $_POST["roundId"];
 $HoleNum = $_POST["holeNum"];
 //$CourseId = $_POST["courseId"];
@@ -237,7 +237,6 @@ function getDirOffTarget($shotHeading, $targetHeading) {
 foreach ($shots as $key=>$value) {
 	$ShotNum = $key + 1;
 	$ShotFrom = $value->shotFrom;
-	echo $ShotFrom;
 	$DistanceToHole = $value->distanceToHole;
 	$ShotDistance = $value->shotDistance;
 	$ClubNum = $value->clubNum;
